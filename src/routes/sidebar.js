@@ -13,7 +13,7 @@ let routes = [
   {
     path: "/app/account-detail",
     icon: <MdOutlineAccountBalanceWallet className={iconClasses} />,
-    name: "AccountDetail",
+    name: "Account Detail",
   },
   {
     path: "/app/about-us", //url folder
