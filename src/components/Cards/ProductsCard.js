@@ -1,8 +1,22 @@
 import React from 'react';
 import TitleCard from './TitleCard';
+import { useDispatch } from 'react-redux';
+import { openModal } from '../../features/common/modalSlice';
+import { MODAL_BODY_TYPES } from '../../utils/globalConstantUtil';
 
 function ProductsCard({ title, icon, price, description, colorIndex }) {
   const COLORS = ["primary", "primary"];
+
+  const dispatch = useDispatch();
+  const openReview = () => {
+    dispatch(
+      openModal({
+        title: "Add Review",
+        bodyType: MODAL_BODY_TYPES.OPEN_REVIEW,
+        extraObject: {title,icon,price},
+      })
+    );
+  };
 
   const getDescStyle = () => {
     if (description.includes("↗︎")) return "font-bold text-green-700 dark:text-green-300";
@@ -20,7 +34,7 @@ function ProductsCard({ title, icon, price, description, colorIndex }) {
           <p className={`text-${COLORS[colorIndex % 1]} text-2xl`}>Price:{price}</p>
           <p className={"stat-desc " + getDescStyle()}>{description}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary" onClick={()=>alert('Review Sent!')}>Review Now</button>
+            <button className="btn btn-sm btn-primary" onClick={openReview}>Review Now</button>
           </div>
         </div>
       </div>

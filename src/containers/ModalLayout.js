@@ -2,6 +2,7 @@ import { MODAL_BODY_TYPES } from "../utils/globalConstantUtil";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../features/common/modalSlice";
 import ConfirmationModalBody from "../features/common/components/ConfirmationModalBody";
+import ReviewModelBody from "../features/common/components/ReviewModelBody";
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
     (state) => state.modal
@@ -31,6 +32,12 @@ function ModalLayout() {
              
               [MODAL_BODY_TYPES.CONFIRMATION]: (
                 <ConfirmationModalBody
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.OPEN_REVIEW]: (
+                <ReviewModelBody
                   closeModal={close}
                   extraObject={extraObject}
                 />

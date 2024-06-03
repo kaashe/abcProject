@@ -56,7 +56,7 @@ function Dashboard() {
       </div>
 
       {/** ---------------------- Products Cards Section ------------------------- */}
-      <div className="grid lg:grid-cols-2 mt-4 grid-cols-1 gap-6">
+      <div className="grid lg:grid-cols-3 mt-4 grid-cols-1 gap-6">
       {productsData.map((d, k) => {
           return <ProductsCard key={k} {...d} colorIndex={k} />;
         })}
