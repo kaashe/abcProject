@@ -3,6 +3,7 @@ module.exports = Object.freeze({
     // 
     OPEN_REVIEW: "OPEN_REVIEW",
     WITHDRAW_AMOUNT: "WITHDRAW_AMOUNT",
+    DELETE_ACCOUNT: "DELETE_ACCOUNT",
     // 
     VERIFY_OTP: "VERIFY_OTP",
     ADD_MEMBER: "ADD_MEMBER",

@@ -4,6 +4,7 @@ import { closeModal } from "../features/common/modalSlice";
 import ConfirmationModalBody from "../features/common/components/ConfirmationModalBody";
 import ReviewModelBody from "../features/common/components/ReviewModelBody";
 import WithdrawAmountModal from "../features/withdraw/components/WithdrawAmountModal";
+import DeleteAccountModal from "../features/delete-account/components/DeleteAccountModal";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -41,6 +42,12 @@ function ModalLayout() {
               ),
               [MODAL_BODY_TYPES.WITHDRAW_AMOUNT]: (
                 <WithdrawAmountModal
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.DELETE_ACCOUNT]: (
+                <DeleteAccountModal
                   closeModal={close}
                   extraObject={extraObject}
                 />

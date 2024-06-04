@@ -2,32 +2,26 @@ import React from "react";
 
 const AboutUs = () => {
   return (
-    <div >
+    <div>
       <div className="collapse collapse-arrow bg-base-200">
         <input type="radio" name="my-accordion-2" defaultChecked />
-        <div className="collapse-title text-xl font-medium">
-          Click to open this one and close others
-        </div>
+        <div className="collapse-title text-xl font-medium">Service 1</div>
         <div className="collapse-content">
-          <p>hello</p>
+          <p>We offer</p>
         </div>
       </div>
       <div className="collapse collapse-arrow bg-base-200">
         <input type="radio" name="my-accordion-2" />
-        <div className="collapse-title text-xl font-medium">
-          Click to open this one and close others
-        </div>
+        <div className="collapse-title text-xl font-medium">Service 2</div>
         <div className="collapse-content">
-          <p>hello</p>
+          <p>We offer</p>
         </div>
       </div>
       <div className="collapse collapse-arrow bg-base-200">
         <input type="radio" name="my-accordion-2" />
-        <div className="collapse-title text-xl font-medium">
-          Click to open this one and close others
-        </div>
+        <div className="collapse-title text-xl font-medium">Service 3</div>
         <div className="collapse-content">
-          <p>hello</p>
+          <p>We offer</p>
         </div>
       </div>
     </div>

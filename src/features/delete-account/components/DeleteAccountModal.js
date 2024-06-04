@@ -1,0 +1,26 @@
+import React from "react";
+
+const DeleteAccountModal = ({ closeModal }) => {
+  return (
+    <div className="text-center">
+      <div className="modal-action">
+        <button
+          type="button"
+          className="btn btn-sm btn-glass"
+          onClick={() => closeModal()}
+        >
+          Cancel
+        </button>
+        <button
+          type="submit"
+          // disabled={isLoading || updateIsLoading}
+          className="btn btn-sm btn-primary px-6"
+        >
+          Confirm
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default DeleteAccountModal;

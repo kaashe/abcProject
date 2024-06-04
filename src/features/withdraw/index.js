@@ -7,13 +7,13 @@ import { openModal } from "../common/modalSlice";
 
 const WithDraw = () => {
   const { control, handleSubmit, getValues } = useForm({});
-  const dispatch = useDispatch();
   const submitForm = (data) => {
     console.log(data);
     if (data) {
       withDraw();
     }
   };
+  const dispatch = useDispatch();
   const withDraw = () => {
     dispatch(
       openModal({
