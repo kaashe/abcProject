@@ -2,6 +2,7 @@ module.exports = Object.freeze({
   MODAL_BODY_TYPES: {
     // 
     OPEN_REVIEW: "OPEN_REVIEW",
+    WITHDRAW_AMOUNT: "WITHDRAW_AMOUNT",
     // 
     VERIFY_OTP: "VERIFY_OTP",
     ADD_MEMBER: "ADD_MEMBER",

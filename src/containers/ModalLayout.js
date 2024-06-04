@@ -3,6 +3,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../features/common/modalSlice";
 import ConfirmationModalBody from "../features/common/components/ConfirmationModalBody";
 import ReviewModelBody from "../features/common/components/ReviewModelBody";
+import WithdrawAmountModal from "../features/withdraw/components/WithdrawAmountModal";
+
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
     (state) => state.modal
@@ -28,8 +30,6 @@ function ModalLayout() {
           {/* Loading modal body according to different modal type */}
           {
             {
-              
-             
               [MODAL_BODY_TYPES.CONFIRMATION]: (
                 <ConfirmationModalBody
                   closeModal={close}
@@ -37,7 +37,10 @@ function ModalLayout() {
                 />
               ),
               [MODAL_BODY_TYPES.OPEN_REVIEW]: (
-                <ReviewModelBody
+                <ReviewModelBody closeModal={close} extraObject={extraObject} />
+              ),
+              [MODAL_BODY_TYPES.WITHDRAW_AMOUNT]: (
+                <WithdrawAmountModal
                   closeModal={close}
                   extraObject={extraObject}
                 />
