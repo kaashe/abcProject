@@ -8,6 +8,9 @@ import { TiShoppingCart } from "react-icons/ti";
 import { TbPerfume } from "react-icons/tb";
 import { FaOpencart } from "react-icons/fa";
 import { LuCable } from "react-icons/lu";
+import { GiConverseShoe } from "react-icons/gi";
+import { PiBaseballCap } from "react-icons/pi";
+import { useMemo, useState } from "react";
 
 const statsData = [
   {
@@ -31,26 +34,69 @@ const statsData = [
 ];
 const productsData = [
   {
-    title: "Shoes",
+    title: "Shoes 301",
     price: "30",
+    category:"shoes",
     icon: "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg",
     description: "Test products",
   },
   {
-    title: "Cap",
+    title: "Shoes 302",
+    price: "70",
+    category:"shoes",
+    icon: "https://img.freepik.com/free-photo/sports-shoe-pair-design-illustration-generated-by-ai_188544-19642.jpg?t=st=1717491936~exp=1717495536~hmac=cf7172c99b4dcdec0cd2f87805cafb02fabdd6cf221af4314195c7ebea9bd69b&w=996",
+    description: "Test products",
+  },
+  {
+    title: "Cap 303",
     price: "10",
+    category:"caps",
     icon: "https://alprints.com/wp-content/uploads/2023/03/Cap-Mockup-2.jpg",
     description: "Test products",
   },
   {
-    title: "Shirt",
+    title: "Cap 304",
+    price: "30",
+    category:"caps",
+    icon: "https://img.freepik.com/free-photo/set-two-trucker-hats-with-mesh-back_23-2149410050.jpg?t=st=1717492076~exp=1717495676~hmac=0663a86dee09fc2d04176ed4ca6ebeea92389a64dc1a32a8299b708b3ee1caf6&w=826",
+    description: "Test products",
+  },
+  {
+    title: "Cap 305",
+    price: "25",
+    category:"caps",
+    icon: "https://img.freepik.com/premium-psd/sports-cap-logo-mockup-branding-mockup_57262-172.jpg?w=826",
+    description: "Test products",
+  },
+  {
+    title: "Shirt 101",
     price: "81",
+    category:"shirts",
     icon: "https://alprints.com/wp-content/uploads/2018/09/kids-tshirt-design.jpg",
+    description: "Test Product",
+  },
+  {
+    title: "Shirt 102",
+    price: "21",
+    category:"shirts",
+    icon: "https://img.freepik.com/premium-psd/tshirts-mockup-front-back-white-male-tshirt-photoshop-mockup-3d-tshirt-mockup-t-shirt-psd_662214-642.jpg?w=826",
     description: "Test Product",
   },
 ];
 
 function Dashboard() {
+  const [filterItem, setFilterItem] = useState('');
+
+  const filterProducts = (products) => {
+    if (filterItem==='') return products; 
+    return products?.filter((product) => product?.category === filterItem);
+  };
+
+  const filterItemHandler = (item) => {
+    setFilterItem(item);
+  };
+  const filteredProducts = useMemo(() => filterProducts(productsData), [filterItem, productsData]);
+
   return (
     <>
       {/** ---------------------- Balance & Rewards Section ------------------------- */}
@@ -60,39 +106,54 @@ function Dashboard() {
         })}
       </div>
       <div className="mt-2 gap-1">
-        <ul className="menu menu-sm menu-vertical lg:menu-horizontal bg-base-400 rounded-box space-y-1 lg:space-y-0 lg:space-x-1">
-          <li>
-            <a className="bg-base-100"><TiShoppingCart />Groceries & Pets</a>
+      <ul className="menu menu-sm menu-vertical lg:menu-horizontal bg-base-400 rounded-box space-y-1 lg:space-y-0 lg:space-x-1">
+          <li onClick={() => filterItemHandler('shoes')}>
+            <a className={`${filterItem === 'shoes' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              <GiConverseShoe />Shoes
+            </a>
           </li>
-          <li>
-          
-            <a className="bg-base-100"> <GiLipstick />Health & Beauty</a>
+          <li onClick={() => filterItemHandler('caps')}>
+            <a className={`${filterItem === 'caps' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              <PiBaseballCap />Caps
+            </a>
           </li>
-          <li>
-            <a className="bg-base-100"><GiClothes />Men's Fashion</a>
+          <li onClick={() => filterItemHandler('shirts')}>
+            <a className={`${filterItem === 'shirts' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              <GiClothes />Shirts
+            </a>
           </li>
-          <li>
-            <a className="bg-base-100"><GiLoincloth />Women's Fashion</a>
+          <li onClick={() => filterItemHandler('')}>
+            <a className={`${filterItem === 'womens-fashion' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              <GiLoincloth />Women's Fashion
+            </a>
           </li>
-          <li>
-            <a className="bg-base-100"><TbPerfume />PerFumes</a>
+          <li onClick={() => filterItemHandler('')}>
+            <a className={`${filterItem === 'perfumes' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              <TbPerfume />Perfumes
+            </a>
           </li>
-          <li>
-            <a className="bg-base-100"><FaOpencart />Home & Lifestyle</a>
+          <li onClick={() => filterItemHandler('')}>
+            <a className={`${filterItem === 'home-lifestyle' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              <FaOpencart />Home & Lifestyle
+            </a>
           </li>
-          <li>
-            <a className="bg-base-100"><LuCable />Electronic Devices</a>
+          <li onClick={() => filterItemHandler('')}>
+            <a className={`${filterItem === 'electronic-devices' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              <LuCable />Electronic Devices
+            </a>
           </li>
-          {/* <li>
-            <a className="bg-base-100">TV & Home Appliances</a>
-          </li> */}
-        </ul>{" "}
+          <li onClick={() => filterItemHandler('')}>
+            <a className={`${filterItem === '' ? 'bg-black text-white' : 'bg-base-100'}`}>
+              All Products
+            </a>
+          </li>
+        </ul>
       </div>
       {/** ---------------------- Products Cards Section ------------------------- */}
       <div className="grid lg:grid-cols-3 mt-4 grid-cols-1 gap-6">
-        {productsData.map((d, k) => {
-          return <ProductsCard key={k} {...d} colorIndex={k} />;
-        })}
+        {filteredProducts?.map((d, k) => (
+          <ProductsCard key={k} {...d} colorIndex={k} />
+        ))}
       </div>
     </>
   );
