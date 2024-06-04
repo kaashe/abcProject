@@ -6,7 +6,7 @@ import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 import { openModal } from "../common/modalSlice";
 
 const WithDraw = () => {
-  const { control, handleSubmit, getValues } = useForm({});
+  const { control, handleSubmit } = useForm({});
   const submitForm = (data) => {
     console.log(data);
     if (data) {
