@@ -200,7 +200,7 @@ function Dashboard() {
         </ul>
       </div>
       {/** ---------------------- Products Cards Section ------------------------- */}
-      <div className="grid lg:grid-cols-3 mt-4 grid-cols-1 gap-6">
+      <div className="grid lg:grid-cols-4 mt-4 grid-cols-1 gap-6">
         {filteredProducts?.map((d, k) => (
           <ProductsCard key={k} {...d} colorIndex={k} />
         ))}
