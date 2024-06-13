@@ -31,7 +31,6 @@ function ProductsCard({ title, icon, price, description, colorIndex }) {
         </figure>
         <div className="card-body">
           <h2 className="card-title">{title}</h2>
-          <p className={`text-${COLORS[colorIndex % 1]} text-2xl`}>Price:{price}</p>
           <p className={"stat-desc " + getDescStyle()}>{description}</p>
           <div className="card-actions justify-end">
             <button className="btn btn-sm btn-primary" onClick={openReview}>Review Now</button>
