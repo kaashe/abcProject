@@ -6,7 +6,7 @@ import { useLogin } from "../../app/custom-hooks/login/useLogin";
 import ErrorText from "../../components/Typography/ErrorText";
 import InputText from "../../components/Input/InputText";
 import HelperText from "../../components/Typography/HelperText";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { showNotification } from "../common/headerSlice";
 import { openModal, closeModal } from "../common/modalSlice";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
@@ -67,6 +67,22 @@ function Login() {
     }
   };
 
+  const openErrorModal = useCallback((errorMessage) => {
+    setTheError(errorMessage);
+    dispatch(
+      openModal({
+        title: "Please fix the below error:",
+        bodyType: MODAL_BODY_TYPES.OPEN_ERROR_MODAL,
+        extraObject: { error: errorMessage },
+      })
+    );
+  }, [dispatch]);
+
+  const closeErrorModal = useCallback(() => {
+    setTheError('');
+    dispatch(closeModal());
+  }, [dispatch]);
+
   useEffect(() => {
     if (signUpisSuccess) {
       dispatch(showNotification({ message: "User Created!", status: 1 }));
@@ -77,21 +93,11 @@ function Login() {
       setTheError(signUpError?.data?.message || "An error occurred");
       openErrorModal(signUpError?.data?.message || "An error occurred");
     }
-  }, [signUpisSuccess, signUpisError, signUpError, isError, error, dispatch]);
-
-  const openErrorModal = (errorMessage) => {
-    dispatch(
-      openModal({
-        title: "Please fix the below error:",
-        bodyType: MODAL_BODY_TYPES.OPEN_ERROR_MODAL,
-        extraObject: { error: errorMessage },
-      })
-    );
-  };
+  }, [signUpisSuccess, signUpisError, signUpError, isError, error, dispatch, openErrorModal]);
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center">
-      {isOpen && <ModalLayout />}
+      {isOpen && <ModalLayout onClose={closeErrorModal} error={theError} />}
       <div className="card mx-auto w-full max-w-5xl shadow-xl">
         <div className="grid md:grid-cols-2 grid-cols-1 bg-base-100 rounded-xl">
           <div>
@@ -208,6 +214,8 @@ function Login() {
                   {isNewUser ? "Already have an Account, Login" : "Create Account"}
                 </button>
               </HelperText>
+             
+              <ErrorText styleClass="mt-16">{theError}</ErrorText>
             </form>
           </div>
         </div>
