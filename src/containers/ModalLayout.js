@@ -5,6 +5,7 @@ import ConfirmationModalBody from "../features/common/components/ConfirmationMod
 import ReviewModelBody from "../features/common/components/ReviewModelBody";
 import WithdrawAmountModal from "../features/withdraw/components/WithdrawAmountModal";
 import DeleteAccountModal from "../features/delete-account/components/DeleteAccountModal";
+import ErrorModal from "../features/common/components/ErrorModal";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -39,6 +40,9 @@ function ModalLayout() {
               ),
               [MODAL_BODY_TYPES.OPEN_REVIEW]: (
                 <ReviewModelBody closeModal={close} extraObject={extraObject} />
+              ),
+              [MODAL_BODY_TYPES.OPEN_ERROR_MODAL]: (
+                <ErrorModal closeModal={close} extraObject={extraObject} />
               ),
               [MODAL_BODY_TYPES.WITHDRAW_AMOUNT]: (
                 <WithdrawAmountModal

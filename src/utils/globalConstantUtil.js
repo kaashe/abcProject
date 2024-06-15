@@ -2,6 +2,7 @@ module.exports = Object.freeze({
   MODAL_BODY_TYPES: {
     // 
     OPEN_REVIEW: "OPEN_REVIEW",
+    OPEN_ERROR_MODAL: "OPEN_ERROR_MODAL",
     WITHDRAW_AMOUNT: "WITHDRAW_AMOUNT",
     DELETE_ACCOUNT: "DELETE_ACCOUNT",
     // 
