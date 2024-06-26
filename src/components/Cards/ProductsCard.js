@@ -5,7 +5,7 @@ import { openModal } from '../../features/common/modalSlice';
 import { MODAL_BODY_TYPES } from '../../utils/globalConstantUtil';
 
 function ProductsCard({ title, icon, price, description, colorIndex }) {
-  const COLORS = ["primary", "primary"];
+  const COLORS = ["", ""];
 
   const dispatch = useDispatch();
   const openReview = () => {
@@ -33,8 +33,7 @@ function ProductsCard({ title, icon, price, description, colorIndex }) {
           <h2 className="card-title">{title}</h2>
           <p className={"stat-desc " + getDescStyle()}>{description}</p>
           <div className="card-actions justify-end">
-            <button className="btn btn-sm btn-primary" onClick={openReview}>Review Now</button>
-          </div>
+          <button className="btn btn-sm bg-orange-600 text-white hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300" onClick={openReview}>Review Now</button>          </div>
         </div>
       </div>
   );
