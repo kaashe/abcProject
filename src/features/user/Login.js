@@ -19,6 +19,7 @@ function Login() {
   const {
     login,
     isLoading,
+    isSuccess,
     isError,
     error,
     signUphandler,
@@ -27,12 +28,12 @@ function Login() {
     signUpisError,
     signUpError,
   } = useLogin();
-
+console.log(isSuccess,'isSuccess');
   const { control, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
       email: "",
       password: "",
-      photo: ["3fdfef.png"],
+      photo: "3fdfef.png",
     },
   });
 
@@ -54,11 +55,16 @@ function Login() {
             formData.append(key, data[key]);
           }
         }
-        const response = await signUphandler(formData);
+        const payload = { role: "Customer", ...data }
+        console.log(payload);
+        const response = await signUphandler(payload);
         localStorage.setItem('access_token', response?.token);
-        // window.location.href = "/app/dashboard";
+        
       } else {
-        await login(data);
+        const { email, photo, ...payload } = data;
+        console.log(payload);
+        const response =  await login(payload);
+        localStorage.setItem('access_token', response?.token);
       }
     } catch (err) {
       console.error('Error in form submission:', err);
@@ -86,14 +92,18 @@ function Login() {
   useEffect(() => {
     if (signUpisSuccess) {
       dispatch(showNotification({ message: "User Created!", status: 1 }));
-    } else if (isError) {
+    } else if (isSuccess) {
+      dispatch(showNotification({ message: "Logged in Succesfuly!", status: 1 }));
+      window.location.href = "/app/dashboard";
+    }
+    else if (isError) {
       setTheError(error?.data?.message || "An error occurred");
       openErrorModal(error?.data?.message || "An error occurred");
     } else if (signUpisError) {
       setTheError(signUpError?.data?.message || "An error occurred");
       openErrorModal(signUpError?.data?.message || "An error occurred");
     }
-  }, [signUpisSuccess, signUpisError, signUpError, isError, error, dispatch, openErrorModal]);
+  }, [signUpisSuccess,isSuccess, signUpisError, signUpError, isError, error, dispatch, openErrorModal]);
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center">
@@ -206,15 +216,16 @@ function Login() {
               <button
                 type="submit"
                 className="btn mt-2 w-full btn-primary"
+                disabled={isLoading|| signUpIsloading}
               >
-                {isNewUser ? "Submit" : "Login"}
+                {isNewUser ? "Submit" :(isLoading? "Login...":"Login")}
               </button>
               <HelperText className="cursor-pointer mt-1">
                 <button type="button" onClick={showSignup}>
                   {isNewUser ? "Already have an Account, Login" : "Create Account"}
                 </button>
               </HelperText>
-             
+
               <ErrorText styleClass="mt-16">{theError}</ErrorText>
             </form>
           </div>
