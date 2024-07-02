@@ -5,6 +5,7 @@ import ModalLayout from "../../containers/ModalLayout";
 import { useLogin } from "../../app/custom-hooks/login/useLogin";
 import ErrorText from "../../components/Typography/ErrorText";
 import InputText from "../../components/Input/InputText";
+import { TbReload } from "react-icons/tb";
 import HelperText from "../../components/Typography/HelperText";
 import { useCallback, useEffect, useState } from "react";
 import { showNotification } from "../common/headerSlice";
@@ -16,6 +17,7 @@ function Login() {
   const dispatch = useDispatch();
   const [isNewUser, setIsNewUser] = useState(false);
   const [theError, setTheError] = useState('');
+  const [signUpIsloading, setSignUpIsloading] = useState(false);
   const {
     login,
     isLoading,
@@ -24,11 +26,10 @@ function Login() {
     error,
     signUphandler,
     signUpisSuccess,
-    signUpIsloading,
     signUpisError,
     signUpError,
   } = useLogin();
-console.log(isSuccess,'isSuccess');
+
   const { control, handleSubmit, reset, formState: { errors } } = useForm({
     defaultValues: {
       email: "",
@@ -45,6 +46,7 @@ console.log(isSuccess,'isSuccess');
   };
 
   const submitForm = async (data) => {
+    setSignUpIsloading(true);
     try {
       if (isNewUser) {
         const formData = new FormData();
@@ -55,21 +57,25 @@ console.log(isSuccess,'isSuccess');
             formData.append(key, data[key]);
           }
         }
-        const payload = { role: "Customer", ...data }
+        const payload = { role: "Customer", ...data };
         console.log(payload);
         const response = await signUphandler(payload);
         localStorage.setItem('access_token', response?.token);
-        
+        if(response?.token){
+          setSignUpIsloading(false);
+        }
       } else {
         const { email, photo, ...payload } = data;
-        console.log(payload);
-        const response =  await login(payload);
+        const response = await login(payload);
+        console.log(response);
         localStorage.setItem('access_token', response?.token);
+        localStorage.setItem('user', JSON.stringify(response?.data?.user));
       }
     } catch (err) {
       console.error('Error in form submission:', err);
       setTheError(err.message);
       openErrorModal(err.message);
+      setSignUpIsloading(false);
     }
   };
 
@@ -92,8 +98,9 @@ console.log(isSuccess,'isSuccess');
   useEffect(() => {
     if (signUpisSuccess) {
       dispatch(showNotification({ message: "User Created!", status: 1 }));
+      window.location.reload();
     } else if (isSuccess) {
-      dispatch(showNotification({ message: "Logged in Succesfuly!", status: 1 }));
+      dispatch(showNotification({ message: "Logged in Successfully!", status: 1 }));
       window.location.href = "/app/dashboard";
     }
     else if (isError) {
@@ -103,7 +110,7 @@ console.log(isSuccess,'isSuccess');
       setTheError(signUpError?.data?.message || "An error occurred");
       openErrorModal(signUpError?.data?.message || "An error occurred");
     }
-  }, [signUpisSuccess,isSuccess, signUpisError, signUpError, isError, error, dispatch, openErrorModal]);
+  }, [signUpisSuccess, isSuccess, signUpisError, signUpError, isError, error, dispatch, openErrorModal]);
 
   return (
     <div className="min-h-screen bg-base-200 flex items-center">
@@ -213,13 +220,24 @@ console.log(isSuccess,'isSuccess');
                   </div>
                 </div>
               )}
-              <button
+              {!isNewUser ? <button
                 type="submit"
                 className="btn mt-2 w-full btn-primary"
-                disabled={isLoading|| signUpIsloading}
+                disabled={isLoading}
               >
-                {isNewUser ? "Submit" :(isLoading? "Login...":"Login")}
-              </button>
+                {isLoading ? "Login..." : "Login"}
+                <span>{isLoading && <TbReload className={"animate-spin mt-1"} />}</span>
+              </button> :
+                <button
+                  type="submit"
+                  className="btn mt-2 w-full btn-primary"
+                  disabled={signUpIsloading}
+                >
+                  {isLoading ? "Submit..." : "Submit"}
+                  <span>{signUpIsloading && <TbReload className={"animate-spin mt-1"} />}</span>
+                </button>
+              }
+
               <HelperText className="cursor-pointer mt-1">
                 <button type="button" onClick={showSignup}>
                   {isNewUser ? "Already have an Account, Login" : "Create Account"}
