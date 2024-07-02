@@ -61,7 +61,7 @@ function Login() {
         console.log(payload);
         const response = await signUphandler(payload);
         localStorage.setItem('access_token', response?.token);
-        if(response?.token){
+        if (response?.token) {
           setSignUpIsloading(false);
         }
       } else {
@@ -98,7 +98,9 @@ function Login() {
   useEffect(() => {
     if (signUpisSuccess) {
       dispatch(showNotification({ message: "User Created!", status: 1 }));
-      window.location.reload();
+      setTimeout(() => {
+        window.location.reload();
+      }, 5000)
     } else if (isSuccess) {
       dispatch(showNotification({ message: "Logged in Successfully!", status: 1 }));
       window.location.href = "/app/dashboard";
