@@ -16,7 +16,7 @@ export const loginSlice = apiSlice.injectEndpoints({
                 method:'POST',
                 body:initialPost
             }),
-            invalidatesTags: ['sign-up'],
+            invalidatesTags: ['Login'],
         }),
         verifyUserbyOtp: builder.mutation({
             query: (initialPost) => ({

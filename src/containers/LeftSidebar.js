@@ -20,16 +20,13 @@ function LeftSidebar() {
 
                 <li className="mb-2 font-semibold text-xl">
 
-                    <Link to={'/app/dashboard'}>
-                        <h1 className="text-3xl text-center font-bold ">
-                            <div className="avatar placeholder">
-                                <div className="bg-neutral text-neutral-content rounded-full w-10">
-                                    <span className="text-2xl">A</span>
-                                </div>
-                            </div>
-                            BC
-                        </h1>
-
+                    <Link to={"/app/dashboard"}>
+                        <img
+                            className="mask mask-squircle w-10"
+                            src="/AH1.png"
+                            alt="AH Logo"
+                        />
+                        Arkin Hype
                     </Link>
 
                 </li>
