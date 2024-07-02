@@ -48,20 +48,20 @@ const WithDraw = () => {
 
           <div className="mb-4">
             <label className="block text-gray-700 mb-2">Payment Method</label>
-            <div className="flex space-x-4">
-              <button className="bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+            {/* <div className="flex space-x-4"> */}
+              <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 PAY TO PAYPAL
               </button>
-              <button className="bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 PAYPAL
               </button>
-              <button className="bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
                 PAY TO BANK
               </button>
-              <button className="bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
                 BANK
               </button>
-            </div>
+            {/* </div> */}
           </div>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2" htmlFor="amount">

@@ -21,22 +21,18 @@ let routes = [
   {
     path: "/app/withdraw", //url folder
     icon: <BiMoneyWithdraw className={iconClasses} />,
-    name: "Withdraw",   //sidebar title
+    name: "Withdraw", //sidebar title
   },
-    {
-    path: "/app/delete-account", //url folder
-    icon: <MdOutlineFolderDelete className={iconClasses} />,
-    name: "Delete",   //sidebar title
-  },
+  // {
+  //   path: "/app/delete-account", //url folder
+  //   icon: <MdOutlineFolderDelete className={iconClasses} />,
+  //   name: "Delete",   //sidebar title
+  // },
   {
     path: "/app/about-us", //url folder
     icon: <LuUsers2 className={iconClasses} />,
-    name: "About Us",   //sidebar title
+    name: "About Us", //sidebar title
   },
-
-
-
 ];
-
 
 export default routes;
