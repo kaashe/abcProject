@@ -1,10 +1,41 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { openModal } from "../common/modalSlice";
+import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
+import { useForm } from "react-hook-form";
 
-const WithDraw = () => {
+const WithDraw = ({ closeModal, extraObject }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [selectedMethod, setSelectedMethod] = useState(null);
+  console.log(errors, "errr");
+  const dispatch = useDispatch();
 
   const handlePaymentMethodClick = (method) => {
     setSelectedMethod(method);
+  };
+
+  const onSubmit = (data) => {
+    console.log(data);
+    // Handle the withdrawal logic here
+    if (errors === "") {
+    } else {
+      handleDeleteClick();
+    }
+    // closeModal();
+  };
+
+  const handleDeleteClick = () => {
+    dispatch(
+      openModal({
+        title: "Withdraw request Sent Succesfully",
+        bodyType: MODAL_BODY_TYPES.WITHDRAW_REQUEST,
+        extraObject: {},
+      })
+    );
   };
 
   return (
@@ -16,39 +47,66 @@ const WithDraw = () => {
           <p className="mb-6 text-gray-600">
             Withdrawal requests are processed 15th of each month (NET 15).
           </p>
-
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="amount">
-              Name
-            </label>
-            <input
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="amount">
+                Name
+              </label>
+              {/* <input
               type="text"
               id="amount"
               className="w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500"
               placeholder="Name"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="amount">
-              Amount
-            </label>
-            <div className="flex">
-              <span className="inline-flex items-center px-3 bg-gray-200 border border-r-0 border-gray-300 text-gray-600">
-                USD
-              </span>
+            /> */}
               <input
                 type="text"
-                id="amount"
-                className="w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500"
-                placeholder="$0.00"
+                className={`w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500 ${
+                  errors.Name ? "input-error" : ""
+                }`}
+                {...register("Name", {
+                  required: "Name is required",
+                  min: { value: 1, message: "Minimum amount is 1" },
+                })}
               />
+              {errors.Name && (
+                <p className="text-error">{errors.Name.message}</p>
+              )}
             </div>
-            <p className="text-gray-500 mt-2">Select a minimum $50 amount.</p>
-          </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="amount">
+                Amount
+              </label>
+              <div className="flex">
+                <span className="inline-flex items-center px-3 bg-gray-200 border border-r-0 border-gray-300 text-gray-600">
+                  USD
+                </span>
+                {/* <input
+                  type="number"
+                  id="amount"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500"
+                  placeholder="$0.00"
+                /> */}
+                <input
+                  type="number"
+                  id="amount"
+                  className={`w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500 ${
+                    errors.amount ? "input-error" : ""
+                  }`}
+                  {...register("amount", {
+                    required: "Amount is required",
+                    min: { value: 1, message: "Minimum amount is 1" },
+                  })}
+                />
+              </div>
+              {errors.amount && (
+                <p className="text-error">{errors.amount.message}</p>
+              )}
+              <p className="text-gray-500 mt-2">Select a minimum $50 amount.</p>
+            </div>
 
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2">Payment Method</label>
-            {/* <div className="flex space-x-4"> */}
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2">Payment Method</label>
+              {/* <div className="flex space-x-4"> */}
               <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 PAY TO PAYPAL
               </button>
@@ -61,34 +119,51 @@ const WithDraw = () => {
               <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
                 BANK
               </button>
-            {/* </div> */}
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="amount">
-              Wallet Address
-            </label>
-            <input
-              type="text"
-              id="amount"
-              className="w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500"
-              placeholder="123456789"
-            />
-          </div>
-          <div className="mb-6">
-            <label className="block text-gray-700 mb-2" htmlFor="paypal-email">
-              Email
-            </label>
-            <input
-              type="email"
-              id="paypal-email"
-              className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
-              placeholder="Email"
-            />
-          </div>
+              {/* </div> */}
+            </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="W_Address">
+                Wallet Address
+              </label>
+              <input
+                type="text"
+                id="W_Address"
+                className={`w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500 ${
+                  errors.W_Address ? "input-error" : ""
+                }`}
+                placeholder="123456789"
+                {...register("W_Address", {
+                  required: "Wallet Address is required",
+                  min: { value: 1, message: "Minimum amount is 1" },
+                })}
+              />
+              {errors.W_Address && (
+                <p className="text-error">{errors.W_Address.message}</p>
+              )}
+            </div>
 
-          <button className="bg-orange-600 text-white py-2 px-6 rounded hover:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            SUBMIT REQUEST
-          </button>
+            <div className="mb-6">
+              <label
+                className="block text-gray-700 mb-2"
+                htmlFor="paypal-email"
+              >
+                Email
+              </label>
+              <input
+                type="email"
+                id="paypal-email"
+                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                placeholder="Email"
+              />
+            </div>
+
+            <button
+              type="submit"
+              className="bg-orange-600 text-white py-2 px-6 rounded hover:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              SUBMIT REQUEST
+            </button>
+          </form>
         </div>
 
         {/* Right Section */}

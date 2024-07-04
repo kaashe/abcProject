@@ -44,14 +44,20 @@ function ModalLayout() {
               [MODAL_BODY_TYPES.OPEN_ERROR_MODAL]: (
                 <ErrorModal closeModal={close} extraObject={extraObject} />
               ),
-              [MODAL_BODY_TYPES.WITHDRAW_AMOUNT]: (
-                <WithdrawAmountModal
+              // [MODAL_BODY_TYPES.WITHDRAW_AMOUNT]: (
+              //   <WithdrawAmountModal
+              //     closeModal={close}
+              //     extraObject={extraObject}
+              //   />
+              // ),
+              [MODAL_BODY_TYPES.DELETE_ACCOUNT]: (
+                <DeleteAccountModal
                   closeModal={close}
                   extraObject={extraObject}
                 />
               ),
-              [MODAL_BODY_TYPES.DELETE_ACCOUNT]: (
-                <DeleteAccountModal
+              [MODAL_BODY_TYPES.WITHDRAW_REQUEST]: (
+                <WithdrawAmountModal
                   closeModal={close}
                   extraObject={extraObject}
                 />
