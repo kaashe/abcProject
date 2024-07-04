@@ -11,27 +11,8 @@ import { LuCable } from "react-icons/lu";
 import { GiConverseShoe } from "react-icons/gi";
 import { PiBaseballCap } from "react-icons/pi";
 import { useMemo, useState } from "react";
+import { useGetProductsQuery } from "../common/dashboardSlice";
 
-const statsData = [
-  {
-    title: "Original Balance",
-    value: "0",
-    icon: <BuildingStorefrontIcon className="w-8 h-8" />,
-    description: "",
-  },
-  {
-    title: "Trial Balance",
-    value: "0",
-    icon: <CreditCardIcon className="w-8 h-8" />,
-    description: "",
-  },
-  {
-    title: "Rewards & Bonus",
-    value: "0",
-    icon: <CircleStackIcon className="w-8 h-8" />,
-    description: "",
-  },
-];
 const productsData = [
   {
     title: "Shoes 301",
@@ -78,21 +59,58 @@ const productsData = [
 ];
 
 function Dashboard() {
+  const {
+    data: allProducts,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetProductsQuery();
+  const products = allProducts?.data?.products || [];
+  const uniqueCategories = [
+    ...new Set(products?.map((product) => product.category.categoryName)),
+  ];
   const [filterItem, setFilterItem] = useState("");
+  const userdata = localStorage.getItem("user");
+  // const { balance, email, fullname, photo } = JSON?.parse(userdata);
+
+  // Store the JSON string in localStorage
 
   const filterProducts = (products) => {
     if (filterItem === "") return products;
-    return products?.filter((product) => product?.category === filterItem);
+    return products?.filter(
+      (product) => product.category.categoryName === filterItem
+    );
   };
 
   const filterItemHandler = (item) => {
     setFilterItem(item);
   };
   const filteredProducts = useMemo(
-    () => filterProducts(productsData),
-    [filterItem, productsData]
+    () => filterProducts(products),
+    [filterItem, products]
   );
-
+  console.log(filteredProducts);
+  const statsData = [
+    {
+      title: "Original Balance",
+      value: 9,
+      icon: <BuildingStorefrontIcon className="w-8 h-8" />,
+      description: "",
+    },
+    {
+      title: "Trial Balance",
+      value: "0",
+      icon: <CreditCardIcon className="w-8 h-8" />,
+      description: "",
+    },
+    {
+      title: "Rewards & Bonus",
+      value: "0",
+      icon: <CircleStackIcon className="w-8 h-8" />,
+      description: "",
+    },
+  ];
   return (
     <>
       {/** ---------------------- Balance & Rewards Section ------------------------- */}
@@ -103,84 +121,19 @@ function Dashboard() {
       </div>
       <div className="mt-2 gap-1">
         <ul className="menu menu-sm menu-vertical lg:menu-horizontal bg-base-400 rounded-box space-y-1 lg:space-y-0 lg:space-x-1 gap-1">
-          <li onClick={() => filterItemHandler("shoes")}>
-            <a
-              className={`${
-                filterItem === "shoes" ? "bg-black text-white" : "bg-base-100"
-              }`}
-            >
-              <GiConverseShoe />
-              Shoes
-            </a>
-          </li>
-          <li onClick={() => filterItemHandler("caps")}>
-            <a
-              className={`${
-                filterItem === "caps" ? "bg-black text-white" : "bg-base-100"
-              }`}
-            >
-              <PiBaseballCap />
-              Caps
-            </a>
-          </li>
-          <li onClick={() => filterItemHandler("shirts")}>
-            <a
-              className={`${
-                filterItem === "shirts" ? "bg-black text-white" : "bg-base-100"
-              }`}
-            >
-              <GiClothes />
-              Shirts
-            </a>
-          </li>
-          <li onClick={() => filterItemHandler("")}>
-            <a
-              className={`${
-                filterItem === "womens-fashion"
-                  ? "bg-black text-white"
-                  : "bg-base-100"
-              }`}
-            >
-              <GiLoincloth />
-              Women's Fashion
-            </a>
-          </li>
-          <li onClick={() => filterItemHandler("")}>
-            <a
-              className={`${
-                filterItem === "perfumes"
-                  ? "bg-black text-white"
-                  : "bg-base-100"
-              }`}
-            >
-              <TbPerfume />
-              Perfumes
-            </a>
-          </li>
-          <li onClick={() => filterItemHandler("")}>
-            <a
-              className={`${
-                filterItem === "home-lifestyle"
-                  ? "bg-black text-white"
-                  : "bg-base-100"
-              }`}
-            >
-              <FaOpencart />
-              Home & Lifestyle
-            </a>
-          </li>
-          <li onClick={() => filterItemHandler("")}>
-            <a
-              className={`${
-                filterItem === "electronic-devices"
-                  ? "bg-black text-white"
-                  : "bg-base-100"
-              }`}
-            >
-              <LuCable />
-              Electronic Devices
-            </a>
-          </li>
+          {uniqueCategories?.map((category, index) => (
+            <li key={index} onClick={() => filterItemHandler(category)}>
+              <a
+                className={`${
+                  filterItem === category
+                    ? "bg-black text-white"
+                    : "bg-base-100"
+                }`}
+              >
+                {category}
+              </a>
+            </li>
+          ))}
           <li onClick={() => filterItemHandler("")}>
             <a
               className={`${
@@ -193,10 +146,20 @@ function Dashboard() {
         </ul>
       </div>
       {/** ---------------------- Products Cards Section ------------------------- */}
-      <div className="grid lg:grid-cols-4 mt-4 grid-cols-1 gap-6">
-        {filteredProducts?.map((d, k) => (
-          <ProductsCard key={k} {...d} colorIndex={k} />
-        ))}
+      <div
+        className={`grid lg:grid-cols-${
+          isLoading ? "1" : "4"
+        } mt-4 grid-cols-1 gap-6`}
+      >
+        {isLoading ? (
+          <div className="flex align-middle justify-center">
+            <span className="loading loading-spinner loading-lg text-primary"></span>
+          </div>
+        ) : (
+          filteredProducts?.map((d, k) => (
+            <ProductsCard key={k} {...d} colorIndex={k} />
+          ))
+        )}
       </div>
     </>
   );
