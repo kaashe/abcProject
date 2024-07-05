@@ -7,13 +7,14 @@ function ProductsCard({ productName:title,photo, price, description,_id, colorIn
   const COLORS = ["", ""];
   const userdata = localStorage.getItem("user");
   const { _id:user } = JSON?.parse(userdata);
+  const { balance } = JSON?.parse(userdata);
   const dispatch = useDispatch();
   const openReview = () => {
     dispatch(
       openModal({
         title: "Add Review",
         bodyType: MODAL_BODY_TYPES.OPEN_REVIEW,
-        extraObject: {title,photo,price,product:_id,user},
+        extraObject: {title,photo,price,product:_id,user, balance},
       })
     );
   };

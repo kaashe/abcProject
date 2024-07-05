@@ -90,7 +90,7 @@ function Dashboard() {
     () => filterProducts(products),
     [filterItem, products]
   );
-  console.log(filteredProducts);
+  console.log("filteredProducts",filteredProducts);
   const statsData = [
     {
       title: "Original Balance",

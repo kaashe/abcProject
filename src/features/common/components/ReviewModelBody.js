@@ -1,20 +1,37 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useReview } from "../../../app/custom-hooks/Reviews/useReviews";
+import { closeModal } from "../modalSlice";
 
 const ReviewModelBody = () => {
   const { extraObject } = useSelector((state) => state.modal);
-  const { register, handleSubmit, watch, formState: { errors } } = useForm();
-  console.log(extraObject)
-  const {postReviewHanlder, isLoading, isSuccess, isError, error} = useReview();
-  const onSubmit =async (data) => {
-    
-    const dataReview = {...extraObject,...data}
-    const {photo,title,price,...payload} = dataReview;
+  const dispatch = useDispatch();
 
-    await postReviewHanlder(payload)
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  console.log("extraObject",extraObject);
+
+  const { postReviewHanlder, data , isLoading, isSuccess, isError, error } =
+    useReview();
+  const onSubmit = async (data) => {
+    const dataReview = { ...extraObject, ...data };
+    const { photo, title, price, ...payload } = dataReview;
+
+    await postReviewHanlder(payload);
   };
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(closeModal());
+    }
+  }, [isSuccess]);
+  if(extraObject?.balance < extraObject?.price ) {
+    return(<h1>Your Balance is Low Please recharge your Account</h1>)
+  }
 
   return (
     <div>
@@ -65,14 +82,24 @@ const ReviewModelBody = () => {
             className="mask mask-star-2 bg-orange-400"
           />
         </div>
-        {errors.rating && <span className="text-red-500">Rating is required</span>}
+        {errors.rating && (
+          <span className="text-red-500">Rating is required</span>
+        )}
         <textarea
           {...register("review", { required: true })}
           placeholder="Review"
           className="textarea textarea-bordered textarea-sm w-full"
         ></textarea>
-        {errors.comment && <span className="text-red-500">Comment is required</span>}
-        <button type="submit" className="btn btn-sm btn-primary">Submit</button>
+        {errors.comment && (
+          <span className="text-red-500">Comment is required</span>
+        )}
+        <button
+          type="submit"
+          disabled={isLoading}
+          className="btn btn-sm btn-primary"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
