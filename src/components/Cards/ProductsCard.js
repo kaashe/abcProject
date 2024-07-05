@@ -1,19 +1,19 @@
 import React from 'react';
-import TitleCard from './TitleCard';
 import { useDispatch } from 'react-redux';
 import { openModal } from '../../features/common/modalSlice';
 import { MODAL_BODY_TYPES } from '../../utils/globalConstantUtil';
 
-function ProductsCard({ productName:title,photo: icon, price, description, colorIndex }) {
+function ProductsCard({ productName:title,photo, price, description,_id, colorIndex }) {
   const COLORS = ["", ""];
-
+  const userdata = localStorage.getItem("user");
+  const { _id:user } = JSON?.parse(userdata);
   const dispatch = useDispatch();
   const openReview = () => {
     dispatch(
       openModal({
         title: "Add Review",
         bodyType: MODAL_BODY_TYPES.OPEN_REVIEW,
-        extraObject: {title,icon,price},
+        extraObject: {title,photo,price,product:_id,user},
       })
     );
   };

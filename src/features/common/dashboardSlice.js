@@ -4,11 +4,26 @@ export const dashboardSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getProducts: builder.query({
       query: (initialPost) => ({
-        url: `products`,
+        url: "products",
         method: "GET",
       }),
-      invalidatesTags: ["products"],
+      providesTags: ["products"],
+    }),
+    postReview: builder.mutation({
+      query: (initialPost) => ({
+        url: "reviews",
+        method: 'POST',
+        body: initialPost
+      }),
+      invalidatesTags: ['review'],
+    }),
+    getReviews: builder.query({
+      query: (initialPost) => ({
+        url: "reviews",
+        method: "GET",
+      }),
+      providesTags: ["review"],
     }),
   }),
 });
-export const { useGetProductsQuery } = dashboardSlice;
+export const { useGetProductsQuery,usePostReviewMutation } = dashboardSlice;
