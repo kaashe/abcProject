@@ -108,17 +108,17 @@ const WithDraw = ({ closeModal, extraObject }) => {
               <label className="block text-gray-700 mb-2">Payment Method</label>
               {/* <div className="flex space-x-4"> */}
               <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                PAY TO PAYPAL
+                USDT TRC20
               </button>
-              <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
+                USDT ERC20
+              </button>
+              {/* <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 PAYPAL
-              </button>
-              <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
-                PAY TO BANK
-              </button>
-              <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
+              </button> */}
+              {/* <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
                 BANK
-              </button>
+              </button> */}
               {/* </div> */}
             </div>
             <div className="mb-4">
@@ -179,7 +179,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
               </svg>
             </div>
             <h2 className="text-lg font-bold mb-2">
-              PayPal is the safer, easier way to pay
+            USDT is the safer, easier way to pay
             </h2>
             <p className="text-gray-600">
               No matter where you shop, we keep your financial information
