@@ -35,11 +35,7 @@ function ProductsCard({
   return (
     <div className="card card-compact w-95 bg-base-100 shadow-xl p-1">
       <figure>
-        <img
-          src={"success.png"}
-          alt={title}
-          className={`w-full h-48 object-cover`}
-        />
+        <img src={photo} alt={title} className={`w-full h-48 object-cover`} />
       </figure>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
