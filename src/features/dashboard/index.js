@@ -72,7 +72,7 @@ function Dashboard() {
   ];
   const [filterItem, setFilterItem] = useState("");
   const userdata = localStorage.getItem("user");
-  // const { balance, email, fullname, photo } = JSON?.parse(userdata);
+   const userData = JSON?.parse(userdata);
 
   // Store the JSON string in localStorage
 
@@ -94,7 +94,7 @@ function Dashboard() {
   const statsData = [
     {
       title: "Original Balance",
-      value: 9,
+      value: userData?.balance||0,
       icon: <BuildingStorefrontIcon className="w-8 h-8" />,
       description: "",
     },

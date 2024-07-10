@@ -1,12 +1,19 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { openModal } from '../../features/common/modalSlice';
-import { MODAL_BODY_TYPES } from '../../utils/globalConstantUtil';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { openModal } from "../../features/common/modalSlice";
+import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 
-function ProductsCard({ productName:title,photo, price, description,_id, colorIndex }) {
+function ProductsCard({
+  productName: title,
+  photo,
+  price,
+  description,
+  _id,
+  colorIndex,
+}) {
   const COLORS = ["", ""];
   const userdata = localStorage.getItem("user");
-  const { _id:user } = JSON?.parse(userdata);
+  const { _id: user } = JSON?.parse(userdata);
   const { balance } = JSON?.parse(userdata);
   const dispatch = useDispatch();
   const openReview = () => {
@@ -14,7 +21,7 @@ function ProductsCard({ productName:title,photo, price, description,_id, colorIn
       openModal({
         title: "Add Review",
         bodyType: MODAL_BODY_TYPES.OPEN_REVIEW,
-        extraObject: {title,photo,price,product:_id,user, balance},
+        extraObject: { title, photo, price, productId: _id, user, balance },
       })
     );
   };
@@ -26,17 +33,27 @@ function ProductsCard({ productName:title,photo, price, description,_id, colorIn
   // }
 
   return (
-      <div className="card card-compact w-95 bg-base-100 shadow-xl p-1">
-        <figure>
-          <img src={'success.png'} alt={title} className={`w-full h-48 object-cover`} />
-        </figure>
-        <div className="card-body">
-          <h2 className="card-title">{title}</h2>
-          <p className="stat-desc ">{description}</p>
-          <div className="card-actions justify-end">
-          <button className="btn btn-sm bg-orange-600 text-white hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300" onClick={openReview}>Review Now</button>          </div>
+    <div className="card card-compact w-95 bg-base-100 shadow-xl p-1">
+      <figure>
+        <img
+          src={"success.png"}
+          alt={title}
+          className={`w-full h-48 object-cover`}
+        />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{title}</h2>
+        <p className="stat-desc ">{description}</p>
+        <div className="card-actions justify-end">
+          <button
+            className="btn btn-sm bg-orange-600 text-white hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
+            onClick={openReview}
+          >
+            Review Now
+          </button>{" "}
         </div>
       </div>
+    </div>
   );
 }
 
