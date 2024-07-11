@@ -14,23 +14,42 @@ const ReviewModelBody = () => {
     watch,
     formState: { errors },
   } = useForm();
-  console.log("extraObject",extraObject);
+  console.log("extraObject", extraObject);
 
-  const { postReviewHanlder, data , isLoading, isSuccess, isError, error } =
+  const { postReviewHanlder, data, isLoading, isSuccess, isError, error } =
     useReview();
-  const onSubmit = async (data) => {
-    const dataReview = { ...extraObject, ...data };
-    const { photo, title, price, ...payload } = dataReview;
-
-    await postReviewHanlder(payload);
-  };
+    const onSubmit = async (data) => {
+      const dataReview = { ...extraObject, ...data };
+      const { photo, title, price, ...payload } = dataReview;
+    
+      // Calculate 4% of the price
+      const rewardPercentage = 0.04;
+      const rewardAmount = price * rewardPercentage;
+    
+      // Get the current rewards from localStorage
+      let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
+    
+      // Add the reward amount to the current rewards
+      currentRewards += rewardAmount;
+      localStorage.setItem("rewards", currentRewards);
+    
+      // Adjust the original balance
+      let originalBalance = parseFloat(localStorage.getItem("originalBalance")) || 0;
+      let minus = rewardAmount/2;
+      originalBalance -= minus;
+      localStorage.setItem("originalBalance", originalBalance);
+    
+      await postReviewHanlder(payload);
+      window?.location.reload();
+    };
+    
   useEffect(() => {
     if (isSuccess) {
       dispatch(closeModal());
     }
   }, [isSuccess]);
-  if(extraObject?.balance < extraObject?.price ) {
-    return(<h1>Your Balance is Low Please recharge your Account</h1>)
+  if (extraObject?.balance < extraObject?.price) {
+    return (<h1>Your Balance is Low Please recharge your Account</h1>)
   }
 
   return (
@@ -98,7 +117,7 @@ const ReviewModelBody = () => {
           disabled={isLoading}
           className="btn btn-sm btn-primary"
         >
-          Submit
+          {isLoading ? "Submit..." : "Submit"}
         </button>
       </form>
     </div>

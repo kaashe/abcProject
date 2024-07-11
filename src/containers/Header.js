@@ -25,7 +25,11 @@ function Header() {
   }, [currentTheme]);
 
   function logoutUser() {
+    const rewards = localStorage.getItem("rewards");
+    const user = localStorage.getItem("user");
     localStorage.clear();
+    localStorage.setItem("user",user);
+    localStorage.setItem("rewards",rewards);
     window.location.href = "/";
   }
 

@@ -69,7 +69,8 @@ function Login() {
         const response = await login(payload);
         console.log(response);
         localStorage.setItem('access_token', response?.token);
-        localStorage.setItem('user', JSON.stringify(response?.data?.user));
+     const userData=    localStorage.setItem('user', JSON.stringify(response?.data?.user));
+     
       }
     } catch (err) {
       console.error('Error in form submission:', err);
@@ -103,6 +104,9 @@ function Login() {
       }, 5000)
     } else if (isSuccess) {
       dispatch(showNotification({ message: "Logged in Successfully!", status: 1 }));
+      const user = localStorage.getItem("user")
+     const allData = JSON?.parse(user);
+     localStorage.setItem('originalBalance',allData?.balance)
       window.location.href = "/app/dashboard";
     }
     else if (isError) {

@@ -72,6 +72,8 @@ function Dashboard() {
   ];
   const [filterItem, setFilterItem] = useState("");
   const userdata = localStorage.getItem("user");
+  const originalBalance = localStorage.getItem("originalBalance");
+  const rewards = localStorage.getItem("rewards");
    const userData = JSON?.parse(userdata);
 
   // Store the JSON string in localStorage
@@ -94,7 +96,7 @@ function Dashboard() {
   const statsData = [
     {
       title: "Original Balance",
-      value: userData?.balance||0,
+      value: originalBalance||0,
       icon: <BuildingStorefrontIcon className="w-8 h-8" />,
       description: "",
     },
@@ -106,7 +108,7 @@ function Dashboard() {
     },
     {
       title: "Rewards & Bonus",
-      value: "0",
+      value: rewards|| 0,
       icon: <CircleStackIcon className="w-8 h-8" />,
       description: "",
     },
