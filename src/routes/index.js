@@ -4,6 +4,7 @@ const AccountDetail = lazy(() => import('../pages/protected/AccountDetail'));
 const WithDraw = lazy(() => import('../pages/protected/WithDraw'));
 const DeleteAccount = lazy(() => import('../pages/protected/DeleteAccount'));
 const AboutUs = lazy(() => import('../pages/protected/AboutUs'));
+const ContactUs = lazy(() => import('../pages/protected/ContactUs'));
 let routes = [
   {
     path: '/dashboard', // the url
@@ -24,6 +25,10 @@ let routes = [
   {
     path: '/about-us', 
     component: AboutUs, //page
+  },
+  {
+    path: '/contact-us', 
+    component: ContactUs, //page
   },
   
 ];

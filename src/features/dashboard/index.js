@@ -96,7 +96,7 @@ function Dashboard() {
   const statsData = [
     {
       title: "Original Balance",
-      value: originalBalance||0,
+      value: userData?.balance||0,
       icon: <BuildingStorefrontIcon className="w-8 h-8" />,
       description: "",
     },

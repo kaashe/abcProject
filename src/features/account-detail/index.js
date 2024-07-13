@@ -5,7 +5,19 @@ import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 
 const AccountDetail = () => {
   const dispatch = useDispatch();
+  const {
+    address,
+    balance,
+    email,
+    fullname,
+    isApproved,
+    phone,
+    photo,
+    role,
+    status,
+  }
 
+    = JSON.parse(localStorage.getItem("user"))
   const handleDeleteClick = () => {
     dispatch(
       openModal({
@@ -28,9 +40,9 @@ const AccountDetail = () => {
               alt="Profile"
             />
             <div className="ml-4">
-              <h2 className="text-xl font-semibold">Jack Adams</h2>
-              <p className="text-gray-600">Product Designer</p>
-              <p className="text-gray-600">Los Angeles, California, USA</p>
+              <h2 className="text-2xl font-semibold text-[#ea580c]">{fullname}</h2>
+              <p className="text-gray-600">{role}</p>
+              <p className="text-gray-600">{address}</p>
             </div>
             <button className="ml-auto bg-orange-600 text-white px-4 py-2 hover:bg-orange-900 rounded-lg focus:ring-gray-300">
               Edit
@@ -48,25 +60,14 @@ const AccountDetail = () => {
           </div>
           <div className="mt-4">
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-              <div>
-                <label className="text-gray-600">First Name</label>
-                <p className="text-gray-800">Jack</p>
-              </div>
-              <div>
-                <label className="text-gray-600">Last Name</label>
-                <p className="text-gray-800">Adams</p>
-              </div>
+              
               <div>
                 <label className="text-gray-600">Email Address</label>
-                <p className="text-gray-800">jackadams@gmail.com</p>
+                <p className="text-gray-800">{email}</p>
               </div>
               <div>
                 <label className="text-gray-600">Phone</label>
-                <p className="text-gray-800">(213) 555-1234</p>
-              </div>
-              <div>
-                <label className="text-gray-600">Bio</label>
-                <p className="text-gray-800">Product Designer</p>
+                <p className="text-gray-800">{phone}</p>
               </div>
             </div>
           </div>

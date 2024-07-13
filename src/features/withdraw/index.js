@@ -17,7 +17,19 @@ const WithDraw = ({ closeModal, extraObject }) => {
   const handlePaymentMethodClick = (method) => {
     setSelectedMethod(method);
   };
+  const {
+    address,
+    balance,
+    email,
+    fullname,
+    isApproved,
+    phone,
+    photo,
+    role,
+    status,
+  }
 
+    = JSON.parse(localStorage.getItem("user"))
   const onSubmit = (data) => {
     console.log(data);
     // Handle the withdrawal logic here
@@ -178,6 +190,9 @@ const WithDraw = ({ closeModal, extraObject }) => {
                 <path d="M10 2a8 8 0 018 8v4.586l.707.707a1 1 0 01-.707 1.707H2a1 1 0 01-.707-1.707l.707-.707V10a8 8 0 018-8zm0 2a6 6 0 00-6 6v3.586l-.707.707h13.414l-.707-.707V10a6 6 0 00-6-6z" />
               </svg>
             </div>
+            <h2 className="text-lg font-bold mb-2 text-[#ea580c]">
+           Total Earnings: {balance}$
+            </h2>
             <h2 className="text-lg font-bold mb-2">
             USDT is the safer, easier way to pay
             </h2>

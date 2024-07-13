@@ -16,7 +16,7 @@ export const apiSlice = createApi({
   }),
   refetchOnFocus: false,
   refetchOnReconnect: true,
-  tagTypes: ["Login", "sign-up", "products","review"],
+  tagTypes: ["Login", "sign-up", "products","review","users"],
   endpoints: (builder) => ({
     // your endpoints here
   }),

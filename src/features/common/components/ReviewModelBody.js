@@ -6,8 +6,14 @@ import { closeModal } from "../modalSlice";
 
 const ReviewModelBody = () => {
   const { extraObject } = useSelector((state) => state.modal);
+  const {user:id} = extraObject; 
   const dispatch = useDispatch();
-
+  const { updateSingleUser,
+    refetchUsers,
+    updateIsLoading,
+    updateIsSuccess,
+    updateIsError,
+    updateError } = useReview();
   const {
     register,
     handleSubmit,
@@ -18,31 +24,32 @@ const ReviewModelBody = () => {
 
   const { postReviewHanlder, data, isLoading, isSuccess, isError, error } =
     useReview();
-    const onSubmit = async (data) => {
-      const dataReview = { ...extraObject, ...data };
-      const { photo, title, price, ...payload } = dataReview;
-    
-      // Calculate 4% of the price
-      const rewardPercentage = 0.04;
-      const rewardAmount = price * rewardPercentage;
-    
-      // Get the current rewards from localStorage
-      let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
-    
-      // Add the reward amount to the current rewards
-      currentRewards += rewardAmount;
-      localStorage.setItem("rewards", currentRewards);
-    
-      // Adjust the original balance
-      let originalBalance = parseFloat(localStorage.getItem("originalBalance")) || 0;
-      let minus = rewardAmount/2;
-      originalBalance -= minus;
-      localStorage.setItem("originalBalance", originalBalance);
-    
-      await postReviewHanlder(payload);
-      window?.location.reload();
-    };
-    
+  const onSubmit = async (data) => {
+    const dataReview = { ...extraObject, ...data };
+    const { photo, title, price, ...payload } = dataReview;
+
+    // Calculate 4% of the price
+    const rewardPercentage = 0.04;
+    const rewardAmount = price * rewardPercentage;
+
+    // Get the current rewards from localStorage
+    let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
+
+    // Add the reward amount to the current rewards
+    currentRewards += rewardAmount;
+    localStorage.setItem("rewards", currentRewards);
+
+    // Adjust the original balance
+    let originalBalance = parseFloat(localStorage.getItem("originalBalance")) || 0;
+    let minus = rewardAmount / 2;
+    originalBalance -= minus;
+    localStorage.setItem("originalBalance", originalBalance);
+    await postReviewHanlder(payload);
+    const balancePayload = { balance: originalBalance };
+    await updateSingleUser(id, balancePayload);
+    // window?.location.reload();
+  };
+
   useEffect(() => {
     if (isSuccess) {
       dispatch(closeModal());
@@ -68,7 +75,7 @@ const ReviewModelBody = () => {
           <span>{"$"}</span>
         </h1>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} >
         <div className="rating rating-md">
           <input
             type="radio"
@@ -101,17 +108,20 @@ const ReviewModelBody = () => {
             className="mask mask-star-2 bg-orange-400"
           />
         </div>
-        {errors.rating && (
-          <span className="text-red-500">Rating is required</span>
-        )}
-        <textarea
-          {...register("review", { required: true })}
-          placeholder="Review"
-          className="textarea textarea-bordered textarea-sm w-full"
-        ></textarea>
-        {errors.comment && (
-          <span className="text-red-500">Comment is required</span>
-        )}
+        <div>
+          {errors.rating && (
+            <span className="text-red-500">Rating is required</span>
+          )}
+          <textarea
+            {...register("review", { required: true })}
+            placeholder="Review"
+            className="textarea textarea-bordered textarea-sm w-full"
+          ></textarea>
+          {errors.review && (
+            <span className="text-red-500">Comment is required</span>
+          )}
+        </div>
+
         <button
           type="submit"
           disabled={isLoading}
