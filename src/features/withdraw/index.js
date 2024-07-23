@@ -21,6 +21,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
   };
 
   const {
+    _id,
     address,
     balance,
     email,
@@ -46,7 +47,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
       });
       return;
     }
-    const payload = { paymentMethod: selectedMethod, ...data };
+    const payload = {id:_id, payment: selectedMethod, ...data };
     console.log(payload);
     await postWithdraw(payload);
     // Handle the withdrawal logic here
@@ -129,7 +130,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
                 type="button"
                 className={`ml-2 mb-2 py-2 px-4 rounded focus:outline-none focus:ring-2 ${
                   selectedMethod === "USDT TRC20"
-                    ? "bg-blue-500 text-white"
+                    ? "bg-[#6D4E8A] text-white"
                     : "bg-gray-200"
                 }`}
                 onClick={() => handlePaymentMethodClick("USDT TRC20")}
@@ -140,7 +141,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
                 type="button"
                 className={`ml-2 mb-2 py-2 px-4 rounded focus:outline-none focus:ring-2 ${
                   selectedMethod === "USDT ERC20"
-                    ? "bg-blue-500 text-white"
+                    ? "bg-[#6D4E8A] text-white"
                     : "bg-gray-200"
                 }`}
                 onClick={() => handlePaymentMethodClick("USDT ERC20")}

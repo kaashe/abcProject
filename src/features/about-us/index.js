@@ -7,11 +7,51 @@ import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 const AboutUs = () => {
   const dispatch = useDispatch();
 
-  const openModalHandler = (modalType) => {
+  const openAboutUsModalHandler = () => {
     dispatch(
       openModal({
-        title: "More Details",
+        // title: "About Us Details",
         bodyType: MODAL_BODY_TYPES.ABOUT_DETAIL,
+        extraObject: {},
+        size: "lg",
+      })
+    );
+  };
+  const openWithDrawModalHandler = () => {
+    dispatch(
+      openModal({
+        // title: "WithDraw Details",
+        bodyType: MODAL_BODY_TYPES.WithDrawDetails,
+        extraObject: {},
+        size: "lg",
+      })
+    );
+  };
+  const openOurMissionModalHandler = () => {
+    dispatch(
+      openModal({
+        title: "Our Mission Details",
+        bodyType: MODAL_BODY_TYPES.OurMissionDetails,
+        extraObject: {},
+        size: "lg",
+      })
+    );
+  };
+  const openUsesModalHandler = () => {
+    dispatch(
+      openModal({
+        title: "How To Use",
+        bodyType: MODAL_BODY_TYPES.UseDetails,
+        extraObject: {},
+        size: "lg",
+      })
+    );
+  };
+    const openCondationModalHandler = () => {
+    dispatch(
+      openModal({
+        title: "How To Use",
+        bodyType: MODAL_BODY_TYPES.TermscondationDetails,
         extraObject: {},
         size: "lg",
       })
@@ -31,13 +71,9 @@ const AboutUs = () => {
             community where your opinions are valued, and you are rewarded for
             sharing your insights.
           </p>
-          <Link
-            className="text-[#EA580C]"
-            // to={'/app/about-us'}
-            // onClick={openReview}
-          >
+          <button className="text-[#EA580C]"  onClick={openAboutUsModalHandler}>
             More Details
-          </Link>
+          </button>
         </div>
       </div>
       <div className="collapse collapse-arrow bg-base-200">
@@ -50,9 +86,11 @@ const AboutUs = () => {
             required number of reviews set by the admin. met the requirement,
             you will be notified to complete the necessary reviews first.
           </p>
-          <Link className="text-[#EA580C]" to={"/app/withdraw"}>
+          <button className="text-[#EA580C]" 
+           onClick={openWithDrawModalHandler}
+           >
             More Details
-          </Link>
+          </button>
         </div>
       </div>
       <div className="collapse collapse-arrow bg-base-200">
@@ -66,7 +104,7 @@ const AboutUs = () => {
             committed to creating a platform where every review makes a
             difference and every reviewer reaps the benefits.
           </p>
-          <Link className="text-[#EA580C]" to={""}>
+          <Link className="text-[#EA580C]" onClick={openOurMissionModalHandler}>
             More Details
           </Link>
         </div>
@@ -80,7 +118,7 @@ const AboutUs = () => {
             Welcome to Arkin Hype! Follow these simple steps to get started and
             make the most of our platform
           </p>
-          <Link className="text-[#EA580C]" to={""}>
+          <Link className="text-[#EA580C]" onClick={openUsesModalHandler}>
             More Details
           </Link>
         </div>
@@ -97,7 +135,7 @@ const AboutUs = () => {
             Hype. Anyformof dishonest or fraudulent activity will result in
             account suspension or termination.
           </p>
-          <Link className="text-[#EA580C]" to={""}>
+          <Link className="text-[#EA580C]" onClick={openCondationModalHandler}>
             More Details
           </Link>
         </div>

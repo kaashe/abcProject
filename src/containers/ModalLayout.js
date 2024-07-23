@@ -6,6 +6,11 @@ import ReviewModelBody from "../features/common/components/ReviewModelBody";
 import WithdrawAmountModal from "../features/withdraw/components/WithdrawAmountModal";
 import DeleteAccountModal from "../features/delete-account/components/DeleteAccountModal";
 import ErrorModal from "../features/common/components/ErrorModal";
+import AboutUsDetails from "../features/about-us/components/AboutUsDetails";
+import WithDrawDetails from "../features/about-us/components/WithDrawDetails";
+import OurMissionDetails from "../features/about-us/components/OurMissionDetails";
+import UseDetails from "../features/about-us/components/UseDetails";
+import TermscondationDetails from "../features/about-us/components/TermscondationDetails";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -62,7 +67,36 @@ function ModalLayout() {
                   extraObject={extraObject}
                 />
               ),
-
+              [MODAL_BODY_TYPES.ABOUT_DETAIL]: (
+                <AboutUsDetails
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.WITHDRAW_DETAIL]: (
+                <WithDrawDetails
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.OUR_MISSION_DETAIL]: (
+                <OurMissionDetails
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.USES_DETAIL]: (
+                <UseDetails
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.TERMS_CONDATION_DETAIL]: (
+                <TermscondationDetails
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
               [MODAL_BODY_TYPES.DEFAULT]: <div></div>,
             }[bodyType]
           }
