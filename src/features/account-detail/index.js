@@ -2,6 +2,8 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import { openModal } from "../common/modalSlice";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
+import { useGetCurrentUserQuery } from "../common/dashboardSlice";
+// import { useGetCurrentUserQuery } from "../../dashboardSlice";
 
 const AccountDetail = () => {
   const dispatch = useDispatch();
@@ -17,6 +19,15 @@ const AccountDetail = () => {
     status,
   } = JSON.parse(localStorage.getItem("user"));
 
+  const {
+    data: currentuser,
+    refetch,
+    isSuccess: isCurrentUserSuccess,
+    isLoading: isCurrentUserLoading,
+  } = useGetCurrentUserQuery();
+  console.log("current User", currentuser?.data?.data)
+  const userData = currentuser?.data?.data;
+
   const handleDeleteClick = () => {
     dispatch(
       openModal({
@@ -26,6 +37,13 @@ const AccountDetail = () => {
       })
     );
   };
+  if (isCurrentUserLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isCurrentUserSuccess) {
+    return <div>Failed to load user data</div>;
+  }
 
   return (
     <div className="p-6 items-center justify-center">
@@ -96,11 +114,12 @@ const AccountDetail = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
-                  <td className="px-6 py-4 whitespace-nowrap">$500</td>
-                  <td className="px-6 py-4 whitespace-nowrap">${balance}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">$10000</td>
-                  <td className="px-6 py-4 whitespace-nowrap">$100500</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-green-500">{status}</td>
+                  {/* <td className="px-6 py-4 whitespace-nowrap">$500</td> */}
+                  <td className="px-6 py-4 whitespace-nowrap">${userData.Deposit}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${userData.rewards}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${userData.stuckreviews}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${userData.totalBalance}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-green-500">{userData.status}</td>
                 </tr>
               </tbody>
             </table>
