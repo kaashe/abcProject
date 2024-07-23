@@ -119,10 +119,10 @@ const WithDraw = ({ closeModal, extraObject }) => {
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Payment Method</label>
               {/* <div className="flex space-x-4"> */}
-              <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button className="ml-2 mb-2 bg-[#6D4E8A] text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
                 USDT TRC20
               </button>
-              <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <button className="ml-2 mb-2 bg-[#6D4E8A] border border-gray-300 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
                 USDT ERC20
               </button>
               {/* <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
@@ -171,7 +171,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
 
             <button
               type="submit"
-              className="bg-orange-600 text-white py-2 px-6 rounded hover:bg-orange-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="bg-[#6D4E8A] text-white py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
               SUBMIT REQUEST
             </button>

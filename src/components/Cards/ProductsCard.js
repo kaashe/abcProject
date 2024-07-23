@@ -42,7 +42,7 @@ function ProductsCard({
         <p className="stat-desc ">{description}</p>
         <div className="card-actions justify-end">
           <button
-            className="btn btn-sm bg-orange-600 text-white hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
+            className="btn btn-sm bg-[#6D4E8A] text-white  rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
             onClick={openReview}
           >
             Review Now

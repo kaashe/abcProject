@@ -125,7 +125,7 @@ const ReviewModelBody = () => {
         <button
           type="submit"
           disabled={isLoading}
-          className="btn btn-sm btn-primary"
+          className="bg-[#6D4E8A] btn btn-sm btn-primary"
         >
           {isLoading ? "Submit..." : "Submit"}
         </button>
