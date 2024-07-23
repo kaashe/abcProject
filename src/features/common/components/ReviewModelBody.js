@@ -1,19 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useReview } from "../../../app/custom-hooks/Reviews/useReviews";
 import { closeModal } from "../modalSlice";
+import { useGetCurrentUserQuery } from "../dashboardSlice";
 
 const ReviewModelBody = () => {
+  const [selectedRating, setSelectedRating] = useState(0); // State to manage selected rating
+  const {
+    data: currentuser,
+    refetch,
+    isSuccess: isCurrentUserSuccess,
+    isLoading: isCurrentUserLoading,
+  } = useGetCurrentUserQuery();
+  let rewards = currentuser?.data?.data?.rewards;
+  const user = currentuser?.data?.data;
+
   const { extraObject } = useSelector((state) => state.modal);
-  const {user:id} = extraObject; 
+  const { user: id } = extraObject;
   const dispatch = useDispatch();
-  const { updateSingleUser,
+  const {
+    updateSingleUser,
     refetchUsers,
     updateIsLoading,
     updateIsSuccess,
     updateIsError,
-    updateError } = useReview();
+    updateError,
+  } = useReview();
   const {
     register,
     handleSubmit,
@@ -40,7 +53,8 @@ const ReviewModelBody = () => {
     localStorage.setItem("rewards", currentRewards);
 
     // Adjust the original balance
-    let originalBalance = parseFloat(localStorage.getItem("originalBalance")) || 0;
+    let originalBalance =
+      parseFloat(localStorage.getItem("originalBalance")) || 0;
     let minus = rewardAmount / 2;
     originalBalance -= minus;
     localStorage.setItem("originalBalance", originalBalance);
@@ -52,12 +66,20 @@ const ReviewModelBody = () => {
 
   useEffect(() => {
     if (isSuccess) {
+      refetch();
+      localStorage.setItem("rewards", rewards);
+      localStorage.setItem("user", JSON.stringify(user));
       dispatch(closeModal());
+      window.location.reload();
     }
-  }, [isSuccess]);
+  }, [isSuccess, refetch]);
   if (extraObject?.balance < extraObject?.price) {
-    return (<h1>Your Balance is Low Please recharge your Account</h1>)
+    return <h1>Your Balance is Low Please recharge your Account</h1>;
   }
+
+  const handleRatingClick = (value) => {
+    setSelectedRating(value);
+  };
 
   return (
     <div>
@@ -75,38 +97,20 @@ const ReviewModelBody = () => {
           <span>{"$"}</span>
         </h1>
       </div>
-      <form onSubmit={handleSubmit(onSubmit)} >
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="rating rating-md">
-          <input
-            type="radio"
-            {...register("rating", { required: true })}
-            value="1"
-            className="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            {...register("rating", { required: true })}
-            value="2"
-            className="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            {...register("rating", { required: true })}
-            value="3"
-            className="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            {...register("rating", { required: true })}
-            value="4"
-            className="mask mask-star-2 bg-orange-400"
-          />
-          <input
-            type="radio"
-            {...register("rating", { required: true })}
-            value="5"
-            className="mask mask-star-2 bg-orange-400"
-          />
+          {[1, 2, 3, 4, 5].map((value) => (
+            <input
+              key={value}
+              type="radio"
+              {...register("rating", { required: true })}
+              value={value}
+              className={`mask mask-star-2 ${
+                selectedRating >= value ? "bg-orange-400" : "bg-slate-200"
+              }`}
+              onClick={() => handleRatingClick(value)}
+            />
+          ))}
         </div>
         <div>
           {errors.rating && (

@@ -31,6 +31,13 @@ export const dashboardSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["review"],
     }),
+    getCurrentUser: builder.query({
+      query: (initialPost) => ({
+        url: "users/me",
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
     updateUser: builder.mutation({
       query: ({ id, data }) => ({
         url: `users/${id}`,
@@ -41,4 +48,4 @@ export const dashboardSlice = apiSlice.injectEndpoints({
     }),
   }),
 });
-export const { useGetProductsQuery,usePostReviewMutation,useUpdateUserMutation,useGetUsersQuery } = dashboardSlice;
+export const { useGetProductsQuery,usePostReviewMutation,useUpdateUserMutation,useGetCurrentUserQuery,useGetUsersQuery } = dashboardSlice;
