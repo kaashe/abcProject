@@ -10,10 +10,10 @@ const AboutUs = () => {
   const openModalHandler = (modalType) => {
     dispatch(
       openModal({
-        title: 'More Details',
+        title: "More Details",
         bodyType: MODAL_BODY_TYPES.ABOUT_DETAIL,
         extraObject: {},
-        size:"lg",
+        size: "lg",
       })
     );
   };
@@ -34,7 +34,7 @@ const AboutUs = () => {
           <Link
             className="text-[#EA580C]"
             // to={'/app/about-us'}
-            onClick={openReview}
+            // onClick={openReview}
           >
             More Details
           </Link>

@@ -121,7 +121,6 @@ const WithDraw = ({ closeModal, extraObject }) => {
               {errors.amount && (
                 <p className="text-error">{errors.amount.message}</p>
               )}
-              <p className="text-gray-500 mt-2">Select a minimum $50 amount.</p>
             </div>
 
             <div className="mb-4">
