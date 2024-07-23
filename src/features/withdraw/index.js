@@ -1,22 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { openModal } from "../common/modalSlice";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 import { useForm } from "react-hook-form";
+import { useWithdraw } from "../../app/custom-hooks/withdraw/useWithdraw";
+import ErrorText from "../../components/Typography/ErrorText";
 
 const WithDraw = ({ closeModal, extraObject }) => {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors },
   } = useForm();
   const [selectedMethod, setSelectedMethod] = useState(null);
-  console.log(errors, "errr");
   const dispatch = useDispatch();
 
   const handlePaymentMethodClick = (method) => {
     setSelectedMethod(method);
   };
+
   const {
     address,
     balance,
@@ -27,20 +30,32 @@ const WithDraw = ({ closeModal, extraObject }) => {
     photo,
     role,
     status,
-  }
-
-    = JSON.parse(localStorage.getItem("user"))
-  const onSubmit = (data) => {
-    console.log(data);
+  } = JSON.parse(localStorage.getItem("user"));
+  const { postWithdraw, isLoading, isSuccess, isError, error } = useWithdraw();
+  const onSubmit = async (data) => {
+    if (data?.amount > balance) {
+      setError("amount", {
+        type: "manual",
+        message: "Amount exceeds available balance",
+      });
+      return;
+    } else if (data?.amount < 500) {
+      setError("amount", {
+        type: "manual",
+        message: "Min 500 is Allowed",
+      });
+      return;
+    }
+    const payload = { paymentMethod: selectedMethod, ...data };
+    console.log(payload);
+    await postWithdraw(payload);
     // Handle the withdrawal logic here
-    if (errors === "") {
-    } else {
-      handleDeleteClick();
+    if (Object.keys(errors).length === 0) {
     }
     // closeModal();
   };
 
-  const handleDeleteClick = () => {
+  const handleRequestSent = () => {
     dispatch(
       openModal({
         title: "Withdraw request Sent Succesfully",
@@ -49,7 +64,13 @@ const WithDraw = ({ closeModal, extraObject }) => {
       })
     );
   };
-
+  useEffect(() => {
+    if (isSuccess) {
+      handleRequestSent();
+    } else if (isError) {
+      console.log(error, "errrr");
+    }
+  }, [handleRequestSent]);
   return (
     <div className="flex justify-center items-center p-4">
       <div className="p-8 rounded-lg shadow-lg w-full max-w-4xl flex">
@@ -61,27 +82,20 @@ const WithDraw = ({ closeModal, extraObject }) => {
           </p>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-4">
-              <label className="block text-gray-700 mb-2" htmlFor="amount">
+              <label className="block text-gray-700 mb-2" htmlFor="name">
                 Name
               </label>
-              {/* <input
-              type="text"
-              id="amount"
-              className="w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500"
-              placeholder="Name"
-            /> */}
               <input
                 type="text"
                 className={`w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500 ${
-                  errors.Name ? "input-error" : ""
+                  errors.name ? "input-error" : ""
                 }`}
-                {...register("Name", {
+                {...register("name", {
                   required: "Name is required",
-                  min: { value: 1, message: "Minimum amount is 1" },
                 })}
               />
-              {errors.Name && (
-                <p className="text-error">{errors.Name.message}</p>
+              {errors.name && (
+                <p className="text-error">{errors.name.message}</p>
               )}
             </div>
             <div className="mb-4">
@@ -92,12 +106,6 @@ const WithDraw = ({ closeModal, extraObject }) => {
                 <span className="inline-flex items-center px-3 bg-gray-200 border border-r-0 border-gray-300 text-gray-600">
                   USD
                 </span>
-                {/* <input
-                  type="number"
-                  id="amount"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500"
-                  placeholder="$0.00"
-                /> */}
                 <input
                   type="number"
                   id="amount"
@@ -118,20 +126,28 @@ const WithDraw = ({ closeModal, extraObject }) => {
 
             <div className="mb-4">
               <label className="block text-gray-700 mb-2">Payment Method</label>
-              {/* <div className="flex space-x-4"> */}
-              <button className="ml-2 mb-2 bg-[#6D4E8A] text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
+              <button
+                type="button"
+                className={`ml-2 mb-2 py-2 px-4 rounded focus:outline-none focus:ring-2 ${
+                  selectedMethod === "USDT TRC20"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200"
+                }`}
+                onClick={() => handlePaymentMethodClick("USDT TRC20")}
+              >
                 USDT TRC20
               </button>
-              <button className="ml-2 mb-2 bg-[#6D4E8A] border border-gray-300 text-white py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
+              <button
+                type="button"
+                className={`ml-2 mb-2 py-2 px-4 rounded focus:outline-none focus:ring-2 ${
+                  selectedMethod === "USDT ERC20"
+                    ? "bg-blue-500 text-white"
+                    : "bg-gray-200"
+                }`}
+                onClick={() => handlePaymentMethodClick("USDT ERC20")}
+              >
                 USDT ERC20
               </button>
-              {/* <button className="ml-2 mb-2 bg-orange-600 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-blue-500">
-                PAYPAL
-              </button> */}
-              {/* <button className="ml-2 mb-2 bg-orange-600 border border-gray-300 text-white py-2 px-4 hover:bg-orange-900 rounded focus:outline-none focus:ring-2 focus:ring-gray-300">
-                BANK
-              </button> */}
-              {/* </div> */}
             </div>
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="W_Address">
@@ -139,18 +155,17 @@ const WithDraw = ({ closeModal, extraObject }) => {
               </label>
               <input
                 type="text"
-                id="W_Address"
+                id="walletAddress"
                 className={`w-full px-4 py-2 border border-gray-300 rounded-r-md focus:outline-none focus:border-blue-500 ${
-                  errors.W_Address ? "input-error" : ""
+                  errors.walletAddress ? "input-error" : ""
                 }`}
                 placeholder="123456789"
-                {...register("W_Address", {
+                {...register("walletAddress", {
                   required: "Wallet Address is required",
-                  min: { value: 1, message: "Minimum amount is 1" },
                 })}
               />
-              {errors.W_Address && (
-                <p className="text-error">{errors.W_Address.message}</p>
+              {errors.walletAddress && (
+                <p className="text-error">{errors.walletAddress.message}</p>
               )}
             </div>
 
@@ -164,9 +179,21 @@ const WithDraw = ({ closeModal, extraObject }) => {
               <input
                 type="email"
                 id="paypal-email"
-                className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500"
+                className={`w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:border-blue-500 ${
+                  errors.email ? "input-error" : ""
+                }`}
                 placeholder="Email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+$/i,
+                    message: "Invalid email address",
+                  },
+                })}
               />
+              {errors.email && (
+                <p className="text-error">{errors.email.message}</p>
+              )}
             </div>
 
             <button
@@ -191,10 +218,10 @@ const WithDraw = ({ closeModal, extraObject }) => {
               </svg>
             </div>
             <h2 className="text-lg font-bold mb-2 text-[#ea580c]">
-           Total Earnings: {balance}$
+              Total Earnings: {balance}$
             </h2>
             <h2 className="text-lg font-bold mb-2">
-            USDT is the safer, easier way to pay
+              USDT is the safer, easier way to pay
             </h2>
             <p className="text-gray-600">
               No matter where you shop, we keep your financial information
