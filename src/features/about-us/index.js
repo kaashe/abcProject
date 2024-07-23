@@ -21,7 +21,7 @@ const AboutUs = () => {
     dispatch(
       openModal({
         // title: "WithDraw Details",
-        bodyType: MODAL_BODY_TYPES.WithDrawDetails,
+        bodyType: MODAL_BODY_TYPES.WITHDRAW_DETAIL,
         extraObject: {},
         size: "lg",
       })
@@ -30,8 +30,8 @@ const AboutUs = () => {
   const openOurMissionModalHandler = () => {
     dispatch(
       openModal({
-        title: "Our Mission Details",
-        bodyType: MODAL_BODY_TYPES.OurMissionDetails,
+        // title: "Our Mission Details",
+        bodyType: MODAL_BODY_TYPES.OUR_MISSION_DETAIL,
         extraObject: {},
         size: "lg",
       })
@@ -40,8 +40,8 @@ const AboutUs = () => {
   const openUsesModalHandler = () => {
     dispatch(
       openModal({
-        title: "How To Use",
-        bodyType: MODAL_BODY_TYPES.UseDetails,
+        // title: "How To Use",
+        bodyType: MODAL_BODY_TYPES.USES_DETAIL,
         extraObject: {},
         size: "lg",
       })
@@ -50,8 +50,8 @@ const AboutUs = () => {
     const openCondationModalHandler = () => {
     dispatch(
       openModal({
-        title: "How To Use",
-        bodyType: MODAL_BODY_TYPES.TermscondationDetails,
+        // title: "How To Use",
+        bodyType: MODAL_BODY_TYPES.TERMS_CONDATION_DETAIL,
         extraObject: {},
         size: "lg",
       })

@@ -117,7 +117,7 @@ const AccountDetail = () => {
                   {/* <td className="px-6 py-4 whitespace-nowrap">$500</td> */}
                   <td className="px-6 py-4 whitespace-nowrap">${userData.Deposit}</td>
                   <td className="px-6 py-4 whitespace-nowrap">${userData.rewards}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">${userData.stuckreviews}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{userData.stuckreviews}</td>
                   <td className="px-6 py-4 whitespace-nowrap">${userData.totalBalance}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-green-500">{userData.status}</td>
                 </tr>
