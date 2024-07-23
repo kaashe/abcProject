@@ -15,9 +15,8 @@ const AccountDetail = () => {
     photo,
     role,
     status,
-  }
+  } = JSON.parse(localStorage.getItem("user"));
 
-    = JSON.parse(localStorage.getItem("user"))
   const handleDeleteClick = () => {
     dispatch(
       openModal({
@@ -54,13 +53,12 @@ const AccountDetail = () => {
         <div className="shadow rounded-lg p-6 mt-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Personal Information</h3>
-            <button className="bg-[#6D4E8A] text-white px-4 py-2  rounded-lg focus:ring-gray-300">
+            <button className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300">
               Edit
             </button>
           </div>
           <div className="mt-4">
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
-              
               <div>
                 <label className="text-gray-600">Email Address</label>
                 <p className="text-gray-800">{email}</p>
@@ -74,11 +72,38 @@ const AccountDetail = () => {
           <div className="mt-4 flex">
             <h3 className="text-lg font-semibold">Do you want to delete your account?</h3>
             <button
-              className="ml-auto bg-[#6D4E8A] text-white px-4 py-2  rounded-lg focus:ring-gray-300"
+              className="ml-auto bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300"
               onClick={handleDeleteClick}
             >
               Delete
             </button>
+          </div>
+        </div>
+
+        {/* Account Details Table */}
+        <div className="shadow rounded-lg p-6 mt-1">
+          <h3 className="text-lg font-semibold mb-4 text-center text-gray-600">Account Details</h3>
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required Deposit</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reward Balance</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pending Review</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Balance</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                <tr>
+                  <td className="px-6 py-4 whitespace-nowrap">$500</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${balance}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">$10000</td>
+                  <td className="px-6 py-4 whitespace-nowrap">$100500</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-green-500">{status}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
