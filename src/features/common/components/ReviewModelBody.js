@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useReview } from "../../../app/custom-hooks/Reviews/useReviews";
 import { closeModal } from "../modalSlice";
 import { useGetCurrentUserQuery } from "../dashboardSlice";
+import { showNotification } from "../headerSlice";
 
 const ReviewModelBody = () => {
   const [selectedRating, setSelectedRating] = useState(0); // State to manage selected rating
@@ -69,6 +70,12 @@ const ReviewModelBody = () => {
       refetch();
       localStorage.setItem("rewards", rewards);
       localStorage.setItem("user", JSON.stringify(user));
+      dispatch(
+        showNotification({
+          message: "Review Submitted!",
+          status: 1,
+        })
+      );
       dispatch(closeModal());
       window.location.reload();
     }
