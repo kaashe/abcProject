@@ -8,13 +8,10 @@ const ContactUs = () => {
           Contact Us
         </h1>
         <p className="mb-8 lg:w-1/2 mb-8 lg:mb-0">
-          dsfjlksadjf lkdsjflksdjflkds kdjf lkdjsflkds dlskjflksd lkdfnlksd
-          dsnfd; lkdfnls ldnflksd mkd;sfmds ;ldsfsd kjflsda n ksdf kd l
-          dslkfnlsdk lklkadf os df sdn;lkdnf dlsanf dsnf;sdaf;ldsf;ldsf;ldsf
-          l;dsnf kds fndsk;fk;sdnf kldf;lsd dsf kdfnsdf ds;f dlsfj;lsdf
-          ;lsdf;lsdaf kdsfj;sdf ;sdafj;lask dfjsda;lfd;s dsf;saj;fd ;sldfk;lsdfk
-          ;sdfj;lsd ;ldsfa;lk df;lsd;ldsfk ;sdnfdmfnds;fn
-          dlfnsd;fdskfnsdk;fj;sdf k dskn kd kd m fsdn , ld sk kdnn dfsnf
+          We're here to help! If you have any questions, need assistance, or
+          want to provide feedback, please feel free to reach out to us. Our
+          support team is dedicated to ensuring you have a smooth and rewarding
+          experience on Arkin Hype.
         </p>
       </div>
 
@@ -22,9 +19,9 @@ const ContactUs = () => {
       <div className="container mx-auto px-4 py-6">
         <div className="flex flex-col lg:flex-row justify-between items-center">
           <div className="px-16">
-          <button className="bg-[#6D4E8A] border border-white text-white py-4 px-10 text-lg rounded-lg ">
-            Get in Touch
-          </button>
+            <button className="bg-[#6D4E8A] border border-white text-white py-4 px-10 text-lg rounded-lg ">
+              Get in Touch
+            </button>
           </div>
           <div className="lg:w-1/2 flex justify-center items-center">
             <div className="p-8 rounded-lg">
