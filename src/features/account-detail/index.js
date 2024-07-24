@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { openModal } from "../common/modalSlice";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 import { useGetCurrentUserQuery } from "../common/dashboardSlice";
-// import { useGetCurrentUserQuery } from "../../dashboardSlice";
 
 const AccountDetail = () => {
   const dispatch = useDispatch();
@@ -22,10 +21,10 @@ const AccountDetail = () => {
   const {
     data: currentuser,
     refetch,
-    isSuccess: isCurrentUserSuccess,
-    isLoading: isCurrentUserLoading,
+    // isSuccess: isCurrentUserSuccess,
+    // isLoading: isCurrentUserLoading,
   } = useGetCurrentUserQuery();
-  console.log("current User", currentuser?.data?.data)
+  // console.log("current User", currentuser?.data?.data)
   const userData = currentuser?.data?.data;
 
   const handleDeleteClick = () => {
@@ -37,14 +36,22 @@ const AccountDetail = () => {
       })
     );
   };
-  if (isCurrentUserLoading) {
-    return <div>Loading...</div>;
-  }
+  // if (isCurrentUserLoading) {
+  //   return <div>Loading...</div>;
+  // }
 
-  if (!isCurrentUserSuccess) {
-    return <div>Failed to load user data</div>;
-  }
-
+  // if (!isCurrentUserSuccess) {
+  //   return <div>Failed to load user data</div>;
+  // }
+  const EditUser = () => {
+    dispatch(
+      openModal({
+        title: "Edit User",
+        bodyType: MODAL_BODY_TYPES.EDIT_USER,
+        extraObject: {},
+      })
+    );
+  };
   return (
     <div className="p-6 items-center justify-center">
       <div className="max-w-3xl mx-auto">
@@ -53,7 +60,8 @@ const AccountDetail = () => {
           <div className="flex items-center">
             <img
               className="w-16 h-16 rounded-full"
-              src="https://via.placeholder.com/150"
+              src={photo || "https://via.placeholder.com/150"} 
+              // src="https://via.placeholder.com/150"
               alt="Profile"
             />
             <div className="ml-4">
@@ -61,7 +69,7 @@ const AccountDetail = () => {
               <p className="text-gray-600">{role}</p>
               <p className="text-gray-600">{address}</p>
             </div>
-            <button className="ml-auto bg-[#6D4E8A] text-white px-4 py-2  rounded-lg focus:ring-gray-300">
+            <button onClick={EditUser} className="ml-auto bg-[#6D4E8A] text-white px-4 py-2  rounded-lg focus:ring-gray-300">
               Edit
             </button>
           </div>
@@ -71,9 +79,9 @@ const AccountDetail = () => {
         <div className="shadow rounded-lg p-6 mt-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Personal Information</h3>
-            <button className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300">
+            {/* <button className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300">
               Edit
-            </button>
+            </button> */}
           </div>
           <div className="mt-4">
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
@@ -115,11 +123,11 @@ const AccountDetail = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
                   {/* <td className="px-6 py-4 whitespace-nowrap">$500</td> */}
-                  <td className="px-6 py-4 whitespace-nowrap">${userData.Deposit}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">${userData.rewards}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{userData.stuckreviews}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">${userData.totalBalance}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-green-500">{userData.status}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${userData?.Deposit}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${userData?.rewards}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{userData?.stuckreviews}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${userData?.totalBalance}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-green-500">{userData?.status}</td>
                 </tr>
               </tbody>
             </table>

@@ -11,6 +11,7 @@ import WithDrawDetails from "../features/about-us/components/WithDrawDetails";
 import OurMissionDetails from "../features/about-us/components/OurMissionDetails";
 import UseDetails from "../features/about-us/components/UseDetails";
 import TermscondationDetails from "../features/about-us/components/TermscondationDetails";
+import EditUserModalBody from "../features/account-detail/component/Edituser";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -93,6 +94,12 @@ function ModalLayout() {
               ),
               [MODAL_BODY_TYPES.TERMS_CONDATION_DETAIL]: (
                 <TermscondationDetails
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+              [MODAL_BODY_TYPES.EDIT_USER]: (
+                <EditUserModalBody
                   closeModal={close}
                   extraObject={extraObject}
                 />
