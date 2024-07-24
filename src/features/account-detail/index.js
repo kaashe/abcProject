@@ -69,9 +69,9 @@ const AccountDetail = () => {
               <p className="text-gray-600">{role}</p>
               <p className="text-gray-600">{address}</p>
             </div>
-            <button onClick={EditUser} className="ml-auto bg-[#6D4E8A] text-white px-4 py-2  rounded-lg focus:ring-gray-300">
+            {/* <button className="ml-auto bg-[#6D4E8A] text-white px-4 py-2  rounded-lg focus:ring-gray-300">
               Edit
-            </button>
+            </button> */}
           </div>
         </div>
 
@@ -79,9 +79,9 @@ const AccountDetail = () => {
         <div className="shadow rounded-lg p-6 mt-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Personal Information</h3>
-            {/* <button className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300">
+            <button  onClick={EditUser} className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300">
               Edit
-            </button> */}
+            </button>
           </div>
           <div className="mt-4">
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
