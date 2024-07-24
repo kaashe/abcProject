@@ -23,6 +23,11 @@ let routes = [
     icon: <BiMoneyWithdraw className={iconClasses} />,
     name: "Withdraw", //sidebar title
   },
+  {
+    path: "/app/SubmitedReview", //url folder
+    icon: <MdOutlineContacts className={iconClasses} />,
+    name: "Submitted Review", //sidebar title
+  },
   // {
   //   path: "/app/delete-account", //url folder
   //   icon: <MdOutlineFolderDelete className={iconClasses} />,
@@ -38,6 +43,7 @@ let routes = [
     icon: <MdOutlineContacts className={iconClasses} />,
     name: "Contact Us", //sidebar title
   },
+
 ];
 
 export default routes;

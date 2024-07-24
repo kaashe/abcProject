@@ -1,8 +1,12 @@
 import React, { useEffect } from "react";
 import { useGetUserQuery } from "../accountSlice";
 import { useForm } from "react-hook-form";
+import FileInput from "../../../components/Input/FileInput";
+import InputText from "../../../components/Input/InputText";
+import { Controller } from "react-hook-form";
+import InputNumber from "../../../components/Input/InputNumber";
 
-const AboutUsDetails = () => {
+const AboutUsDetails  = ({ closeModal }) => {
     const usereditdata = useGetUserQuery();
     const userData = usereditdata?.data?.data?.data;
     console.log("first", usereditdata?.data?.data?.data) 
@@ -20,13 +24,11 @@ const AboutUsDetails = () => {
     onSubmit={handleSubmit(onSubmit)}
     className="overflow-y-scroll max-h-[65vh] px-1"
   >
-    {isSingleUserLoading ? (
       <>
-        <div className="flex justify-center items-center">
+        {/* <div className="flex justify-center items-center">
           <span className="loading loading-spinner loading-lg text-primary"></span>
-        </div>
+        </div> */}
       </>
-    ) : (
       <>
         <InputText
           name="fullname"
@@ -48,7 +50,7 @@ const AboutUsDetails = () => {
             },
           }}
         />
-        {!id && (
+        {/* {!id && ( */}
           <>
             {" "}
             <InputText
@@ -72,24 +74,21 @@ const AboutUsDetails = () => {
               }}
             />
           </>
-        )}
         <FileInput
           labelTitle="Upload Photo"
           name="photo"
-          onChange={handleImageChange}
+          // onChange={handleImageChange}
           control={control}
           rules={{ required: "Photo is required" }}
           placeholder="Choose image..."
         />
-        {id && (
-          <InputNumber
+          {/* <InputNumber
             name="balance"
             labelTitle="Balance"
             containerStyle="mt-4"
             control={control}
             rules={{ required: "Balance is required" }}
-          />
-        )}
+          /> */}
         <InputNumber
           name="phone"
           labelTitle="Phone"
@@ -97,15 +96,13 @@ const AboutUsDetails = () => {
           control={control}
           rules={{ required: "Phone number is required" }}
         />
-        {!id && (
-          <InputNumber
+          {/* <InputNumber
             name="cnic"
             labelTitle="CNIC"
             containerStyle="mt-4"
             control={control}
             rules={{ required: "CNIC is required" }}
-          />
-        )}
+          /> */}
         <Controller
           name="gender"
           control={control}
@@ -125,15 +122,13 @@ const AboutUsDetails = () => {
           control={control}
           rules={{ required: "Address is required" }}
         />
-        {!id && (
-          <InputText
+          {/* <InputText
             name="education"
             labelTitle="Education"
             containerStyle="mt-4"
             control={control}
             rules={{ required: "Education is required" }}
-          />
-        )}
+          /> */}
         <div className="modal-action">
           <button
             type="button"
@@ -145,19 +140,12 @@ const AboutUsDetails = () => {
           <button
             type="submit"
             className="btn btn-sm btn-primary px-6"
-            disabled={signUpIsLoading || updateIsLoading}
+            // disabled={signUpIsLoading || updateIsLoading}
           >
-            {!id
-              ? !signUpIsLoading
-                ? "Save"
-                : "Saving..."
-              : !updateIsLoading
-              ? "Update"
-              : "Updating..."}
+             Update
           </button>
         </div>
       </>
-    )}
   </form>
   );
 };
