@@ -47,7 +47,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
       });
       return;
     }
-    const payload = {id:_id, payment: selectedMethod, ...data };
+    const payload = { payment: selectedMethod, ...data };
     console.log(payload);
     await postWithdraw(payload);
     // Handle the withdrawal logic here
