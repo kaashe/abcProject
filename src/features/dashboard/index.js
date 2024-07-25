@@ -74,7 +74,7 @@ function Dashboard() {
   const userdata = localStorage.getItem("user");
   const originalBalance = localStorage.getItem("originalBalance");
   const rewards = localStorage.getItem("rewards");
-   const userData = JSON?.parse(userdata);
+   const userData = JSON.parse(userdata);
 
   // Store the JSON string in localStorage
 
