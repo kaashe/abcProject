@@ -108,7 +108,8 @@ function Dashboard() {
     },
     {
       title: "Rewards & Bonus",
-      value: rewards|| 0,
+      // value: rewards|| 0,
+      value: userData?.rewards||0,
       icon: <CircleStackIcon className="w-8 h-8" />,
       description: "",
     },
@@ -117,7 +118,7 @@ function Dashboard() {
     <>
       {/** ---------------------- Balance & Rewards Section ------------------------- */}
       <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-1 gap-6">
-        {statsData.map((d, k) => {
+        {statsData?.map((d, k) => {
           return <DashboardStats key={k} {...d} colorIndex={k} />;
         })}
       </div>
