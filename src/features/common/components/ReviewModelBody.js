@@ -67,17 +67,17 @@ const ReviewModelBody = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      refetch();
-      localStorage.setItem("rewards", rewards);
-      localStorage.setItem("user", JSON.stringify(user));
       dispatch(
         showNotification({
           message: "Review Submitted!",
           status: 1,
         })
       );
+      refetch();
+      localStorage.setItem("rewards", rewards);
+      localStorage.setItem("user", JSON.stringify(user));
       dispatch(closeModal());
-      window.location.reload();
+      // window.location.reload();
     }
   }, [isSuccess, refetch]);
   if (extraObject?.balance < extraObject?.price) {

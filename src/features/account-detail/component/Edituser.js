@@ -51,7 +51,7 @@ const AboutUsDetails  = ({ closeModal }) => {
           }}
         />
         {/* {!id && ( */}
-          <>
+          {/* <>
             {" "}
             <InputText
               name="password"
@@ -73,15 +73,15 @@ const AboutUsDetails  = ({ closeModal }) => {
                   value === getValues("password") || "Passwords do not match",
               }}
             />
-          </>
-        <FileInput
+          </> */}
+        {/* <FileInput
           labelTitle="Upload Photo"
           name="photo"
           // onChange={handleImageChange}
           control={control}
           rules={{ required: "Photo is required" }}
           placeholder="Choose image..."
-        />
+        /> */}
           {/* <InputNumber
             name="balance"
             labelTitle="Balance"
@@ -137,13 +137,13 @@ const AboutUsDetails  = ({ closeModal }) => {
           >
             Cancel
           </button>
-          <button
+          {/* <button
             type="submit"
             className="btn btn-sm btn-primary px-6"
             // disabled={signUpIsLoading || updateIsLoading}
           >
              Update
-          </button>
+          </button> */}
         </div>
       </>
   </form>

@@ -60,7 +60,9 @@ const AccountDetail = () => {
           <div className="flex items-center">
             <img
               className="w-16 h-16 rounded-full"
-              src={photo || "https://via.placeholder.com/150"} 
+              src={
+                // photo || 
+                "https://via.placeholder.com/150"} 
               // src="https://via.placeholder.com/150"
               alt="Profile"
             />
@@ -116,6 +118,7 @@ const AccountDetail = () => {
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required Deposit</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reward Balance</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pending Review</th>
+                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Used Review</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Balance</th>
                   <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
                 </tr>
@@ -123,9 +126,10 @@ const AccountDetail = () => {
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
                   {/* <td className="px-6 py-4 whitespace-nowrap">$500</td> */}
-                  <td className="px-6 py-4 whitespace-nowrap">${userData?.Deposit}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">${userData?.totalWithdraw}</td>
                   <td className="px-6 py-4 whitespace-nowrap">${userData?.rewards}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{userData?.stuckreviews}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{userData?.reviewsAllowed}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{userData?.reviewsUsed}</td>
                   <td className="px-6 py-4 whitespace-nowrap">${userData?.totalBalance}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-green-500">{userData?.status}</td>
                 </tr>
