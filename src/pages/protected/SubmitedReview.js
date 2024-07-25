@@ -97,15 +97,25 @@ const SubmitedReview = () => {
                 <th>Product</th>
                 <th>Rating</th>
                 <th>Review</th>
+                <th>Profile</th>
+                <th>Status</th>
               </tr>
             </thead>
             <tbody>
               {withdraws?.map((review, index) => (
                 <tr key={review?._id} className="cursor-pointer hover">
                   <td>{index + 1}</td>
-                  <td>{review?.product?.name || "No Name"}</td>
+                  <td>{review?.product?.productName || "No Name"}</td>
                   <td>{review?.rating || "N/A"}</td>
                   <td>{typeof review?.review === 'string' ? review.review : "N/A"}</td>
+                  <td>
+                    {review?.product?.photo ? (
+                      <img src={review.product.photo} alt="Product" className="h-10 w-10 object-cover" />
+                    ) : (
+                      "No Photo"
+                    )}
+                  </td>
+                  <td>{"Submitted"}</td>
                   {/* <td>
                     <button className="btn btn-sm btn-square btn-ghost">
                       <TrashIcon className="w-5 text-error" />
