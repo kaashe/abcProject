@@ -11,10 +11,8 @@ const SubmitedReview = () => {
   const userdata = localStorage.getItem("user");
   const userssss = JSON.parse(userdata);
   const { data: submittedRev, isLoading, isError, error } = useGetSubmittedReviewsQuery(userssss?._id);
-  console.log(submittedRev?.data?.reviews, "submittedRev");
+  // console.log(submittedRev?.data?.reviews, "submittedRev");
   const subReview = submittedRev?.data?.reviews;
-
-
 
   const TopSideButtons = ({ removeAppliedFilter, applySearch }) => {
     const [searchText, setSearchText] = useState("");
@@ -26,7 +24,7 @@ const SubmitedReview = () => {
       } else {
         applySearch(searchText);
       }
-    }, [searchText]);
+    }, [searchText, removeAppliedFilter, applySearch]);
   
     const AddProduct = useCallback(() => {
       dispatch(
@@ -54,11 +52,14 @@ const SubmitedReview = () => {
       </div>
     );
   };
+
   const [withdraws, setWithdraws] = useState(subReview);
+
   const removeFilter = useCallback(() => {
     setWithdraws(subReview);
   }, [subReview]);
-const applySearch = useCallback(
+
+  const applySearch = useCallback(
     (value) => {
       let filteredData = subReview?.filter((item) =>
         item?.review?.toLowerCase().includes(value.toLowerCase())
@@ -67,11 +68,12 @@ const applySearch = useCallback(
     },
     [subReview]
   );
+
   return (
     <TitleCard
       title=""
       topMargin="mt-2"
-            TopSideButtons={
+      TopSideButtons={
         <TopSideButtons
           applySearch={applySearch}
           removeAppliedFilter={removeFilter}
@@ -101,9 +103,9 @@ const applySearch = useCallback(
               {withdraws?.map((review, index) => (
                 <tr key={review?._id} className="cursor-pointer hover">
                   <td>{index + 1}</td>
-                  <td>{review?.product}</td>
-                  <td>{review?.rating}</td>
-                  <td>{review?.review}</td>
+                  <td>{review?.product?.name || "No Name"}</td>
+                  <td>{review?.rating || "N/A"}</td>
+                  <td>{typeof review?.review === 'string' ? review.review : "N/A"}</td>
                   {/* <td>
                     <button className="btn btn-sm btn-square btn-ghost">
                       <TrashIcon className="w-5 text-error" />
