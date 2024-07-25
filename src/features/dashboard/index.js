@@ -68,7 +68,7 @@ function Dashboard() {
   } = useGetProductsQuery();
   const products = allProducts?.data?.products || [];
   const uniqueCategories = [
-    ...new Set(products?.map((product) => product.category.categoryName)),
+    ...new Set(products?.map((product) => product?.category?.categoryName)),
   ];
   const [filterItem, setFilterItem] = useState("");
   const userdata = localStorage.getItem("user");
@@ -81,7 +81,7 @@ function Dashboard() {
   const filterProducts = (products) => {
     if (filterItem === "") return products;
     return products?.filter(
-      (product) => product.category.categoryName === filterItem
+      (product) => product?.category?.categoryName === filterItem
     );
   };
 
