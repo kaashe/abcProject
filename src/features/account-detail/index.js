@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { openModal } from "../common/modalSlice";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 import { useGetCurrentUserQuery } from "../common/dashboardSlice";
+import { useDeleteUserMutation } from "./accountSlice";
 
 const AccountDetail = () => {
   const dispatch = useDispatch();
@@ -27,15 +28,57 @@ const AccountDetail = () => {
   // console.log("current User", currentuser?.data?.data)
   const userData = currentuser?.data?.data;
 
-  const handleDeleteClick = () => {
+  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+
+  const handleDeleteClick = async () => {
+    try {
+      await deleteUser().unwrap();
+      // Handle successful deletion, e.g., log out user or redirect to a different page
+      console.log("Account deleted successfully");
+      // For example, you might want to redirect to the login page
+      // window.location.href = "/login";
+    } catch (error) {
+      // Handle errors, e.g., show an error message
+      console.error("Failed to delete account:", error);
+    }
+  };
+
+  const confirmDeleteClick = () => {
     dispatch(
       openModal({
         title: "Are you sure you want to delete this account?",
         bodyType: MODAL_BODY_TYPES.DELETE_ACCOUNT,
-        extraObject: {},
+        extraObject: { onConfirm: handleDeleteClick },
       })
     );
   };
+
+  // const handleDeleteClick = async () => {
+  //   try {
+  //     await deleteUser().unwrap();
+  //     // console.log("Account deleted successfully");
+  //     dispatch(
+  //       openModal({
+  //         title: "Are you sure you want to delete this account?",
+  //         bodyType: MODAL_BODY_TYPES.DELETE_ACCOUNT,
+  //         extraObject: {},
+  //       })
+  //     );
+  //   } catch (error) {
+  //     // Handle errors, e.g., show an error message
+  //     console.error("Failed to delete account:", error);
+  //   }
+  // };
+
+  // const handleDeleteClick = () => {
+  //   dispatch(
+  //     openModal({
+  //       title: "Are you sure you want to delete this account?",
+  //       bodyType: MODAL_BODY_TYPES.DELETE_ACCOUNT,
+  //       extraObject: {},
+  //     })
+  //   );
+  // };
   // if (isCurrentUserLoading) {
   //   return <div>Loading...</div>;
   // }
@@ -61,13 +104,16 @@ const AccountDetail = () => {
             <img
               className="w-16 h-16 rounded-full"
               src={
-                // photo || 
-                "https://via.placeholder.com/150"} 
+                // photo ||
+                "https://via.placeholder.com/150"
+              }
               // src="https://via.placeholder.com/150"
               alt="Profile"
             />
             <div className="ml-4">
-              <h2 className="text-2xl font-semibold text-[#ea580c]">{fullname}</h2>
+              <h2 className="text-2xl font-semibold text-[#ea580c]">
+                {fullname}
+              </h2>
               <p className="text-gray-600">{role}</p>
               <p className="text-gray-600">{address}</p>
             </div>
@@ -81,7 +127,10 @@ const AccountDetail = () => {
         <div className="shadow rounded-lg p-6 mt-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Personal Information</h3>
-            <button  onClick={EditUser} className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300">
+            <button
+              onClick={EditUser}
+              className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300"
+            >
               Edit
             </button>
           </div>
@@ -98,40 +147,87 @@ const AccountDetail = () => {
             </div>
           </div>
           <div className="mt-4 flex">
-            <h3 className="text-lg font-semibold">Do you want to delete your account?</h3>
+            <h3 className="text-lg font-semibold">
+              Do you want to delete your account?
+            </h3>
             <button
               className="ml-auto bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300"
-              onClick={handleDeleteClick}
+              onClick={confirmDeleteClick}
+              disabled={isDeleting}
             >
-              Delete
+              {isDeleting ? "Deleting..." : "Delete"}
             </button>
           </div>
         </div>
 
         {/* Account Details Table */}
         <div className="shadow rounded-lg p-6 mt-1">
-          <h3 className="text-lg font-semibold mb-4 text-center text-gray-600">Account Details</h3>
+          <h3 className="text-lg font-semibold mb-4 text-center text-gray-600">
+            Account Details
+          </h3>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Required Deposit</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reward Balance</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pending Review</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Used Review</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total Balance</th>
-                  <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Required Deposit
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Reward Balance
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Pending Review
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Used Review
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Total Balance
+                  </th>
+                  <th
+                    scope="col"
+                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  >
+                    Status
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
                   {/* <td className="px-6 py-4 whitespace-nowrap">$500</td> */}
-                  <td className="px-6 py-4 whitespace-nowrap">${userData?.totalWithdraw}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">${userData?.rewards}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{userData?.reviewsAllowed}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">{userData?.reviewsUsed}</td>
-                  <td className="px-6 py-4 whitespace-nowrap">${userData?.totalBalance}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-green-500">{userData?.status}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    ${userData?.totalWithdraw}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    ${userData?.rewards}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {userData?.reviewsAllowed}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {userData?.reviewsUsed}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    ${userData?.totalBalance}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-green-500">
+                    {userData?.status}
+                  </td>
                 </tr>
               </tbody>
             </table>

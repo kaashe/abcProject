@@ -3,12 +3,12 @@ import { apiSlice } from "../../app/apiSlice";
 export const accountSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getUser: builder.query({
-        query: (id) => ({
-          url: `users/me`,
-          method: "GET",
-        }),
-        providesTags: ["editUser"],
+      query: (id) => ({
+        url: `users/me`,
+        method: "GET",
       }),
+      providesTags: ["editUser"],
+    }),
     editUser: builder.mutation({
       query: (initialPost) => ({
         url: "users/updateMe",
@@ -17,6 +17,14 @@ export const accountSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ["editUser"],
     }),
+    deleteUser: builder.mutation({
+      query: () => ({
+        url: "users/deleteMe",
+        method: "DELETE",
+      }),
+      invalidatesTags: ["editUser"],
+    }),
   }),
 });
-export const { useEditUserMutation, useGetUserQuery } = accountSlice;
+
+export const { useEditUserMutation, useGetUserQuery, useDeleteUserMutation } = accountSlice;
