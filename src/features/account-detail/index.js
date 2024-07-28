@@ -30,25 +30,13 @@ const AccountDetail = () => {
 
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
 
-  const handleDeleteClick = async () => {
-    try {
-      await deleteUser().unwrap();
-      // Handle successful deletion, e.g., log out user or redirect to a different page
-      console.log("Account deleted successfully");
-      // For example, you might want to redirect to the login page
-      // window.location.href = "/login";
-    } catch (error) {
-      // Handle errors, e.g., show an error message
-      console.error("Failed to delete account:", error);
-    }
-  };
 
   const confirmDeleteClick = () => {
     dispatch(
       openModal({
         title: "Are you sure you want to delete this account?",
         bodyType: MODAL_BODY_TYPES.DELETE_ACCOUNT,
-        extraObject: { onConfirm: handleDeleteClick },
+        // extraObject: { onConfirm: handleDeleteClick },
       })
     );
   };
