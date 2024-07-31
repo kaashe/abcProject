@@ -5,9 +5,12 @@ import { useReview } from "../../../app/custom-hooks/Reviews/useReviews";
 import { closeModal } from "../modalSlice";
 import { useGetCurrentUserQuery } from "../dashboardSlice";
 import { showNotification } from "../headerSlice";
+import HelperText from "../../../components/Typography/HelperText";
 
 const ReviewModelBody = () => {
   const [selectedRating, setSelectedRating] = useState(0); // State to manage selected rating
+  const userData = JSON.parse(localStorage.getItem("user"));
+  // const {stuckreviews,reviewsUsed} = userData;
   const {
     data: currentuser,
     refetch,
@@ -16,7 +19,10 @@ const ReviewModelBody = () => {
   } = useGetCurrentUserQuery();
   let rewards = currentuser?.data?.data?.rewards;
   const user = currentuser?.data?.data;
-
+console.log(user,"currentuser");
+const stuckreviews = user?.stuckreviews;
+const reviewsUsed = user?.reviewsUsed;
+// const {stuckreviews,reviewsUsed} = user;
   const { extraObject } = useSelector((state) => state.modal);
   const { user: id } = extraObject;
   const dispatch = useDispatch();
@@ -34,7 +40,6 @@ const ReviewModelBody = () => {
     watch,
     formState: { errors },
   } = useForm();
-  console.log("extraObject", extraObject);
 
   const { postReviewHanlder, data, isLoading, isSuccess, isError, error } =
     useReview();
@@ -77,7 +82,7 @@ const ReviewModelBody = () => {
       localStorage.setItem("rewards", rewards);
       localStorage.setItem("user", JSON.stringify(user));
       dispatch(closeModal());
-      // window.location.reload();
+      window.location.reload();
     }
   }, [isSuccess, refetch]);
   if (extraObject?.balance < extraObject?.price) {
@@ -135,11 +140,12 @@ const ReviewModelBody = () => {
 
         <button
           type="submit"
-          disabled={isLoading}
+          disabled={isLoading||(stuckreviews===reviewsUsed)}
           className="bg-[#6D4E8A] btn btn-sm btn-primary"
         >
           {isLoading ? "Submit..." : "Submit"}
         </button>
+        {(stuckreviews===reviewsUsed)&&<HelperText>Review Limit Reached</HelperText>}
       </form>
     </div>
   );

@@ -8,7 +8,7 @@ const DeleteAccountModal = ({ closeModal }) => {
 
   const handleDeleteClick = async () => {
     try {
-      await deleteUser().unwrap();
+      await deleteUser();
       // Handle successful deletion, e.g., log out user or redirect to a different page
       console.log("Account deleted successfully");
       // For example, you might want to redirect to the login page
