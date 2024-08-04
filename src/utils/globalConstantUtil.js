@@ -11,6 +11,7 @@ module.exports = Object.freeze({
     OUR_MISSION_DETAIL: "OUR_MISSION_DETAIL",
     USES_DETAIL: "USES_DETAIL",
     TERMS_CONDATION_DETAIL: "TERMS_CONDATION_DETAIL",
+    Stuck_Bundle_Details: "Stuck_Bundle_Details",
     // Edit User
     USER_DETAIL: "USER_DETAIL",
     // 

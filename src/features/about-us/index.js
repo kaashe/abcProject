@@ -57,6 +57,16 @@ const AboutUs = () => {
       })
     );
   };
+  const openStuckBundleModalHandler = () => {
+    dispatch(
+      openModal({
+        // title: "How To Use",
+        bodyType: MODAL_BODY_TYPES.Stuck_Bundle_Details,
+        extraObject: {},
+        size: "lg",
+      })
+    );
+  };
 
   return (
     <div>
@@ -136,6 +146,22 @@ const AboutUs = () => {
             account suspension or termination.
           </p>
           <Link className="text-[#EA580C]" onClick={openCondationModalHandler}>
+            More Details
+          </Link>
+        </div>
+      </div>
+      <div className="collapse collapse-arrow bg-base-200">
+        <input type="radio" name="my-accordion-2" />
+        <div className="collapse-title text-xl font-medium">
+          Stuck Bundles
+        </div>
+        <div className="collapse-content">
+          <p>
+            {" "}
+            This is special stock which is hold by the merchants and this stock
+            come randomly by the system and have x10 extra commission for you.
+          </p>
+          <Link className="text-[#EA580C]" onClick={openStuckBundleModalHandler}>
             More Details
           </Link>
         </div>

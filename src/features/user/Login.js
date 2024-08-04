@@ -127,9 +127,16 @@ function Login() {
             <LandingIntro />
           </div>
           <div className="py-20 px-10">
-            <h2 className="text-2xl font-semibold mb-2 text-center">
+            <div className=" font-semibold  text-center">
+          <img
+              src="./AH1.png"
+              alt="User Dashboard"
+              className="w-48 inline-block rounded-full"
+              ></img>
+              </div>
+            {/* <h2 className="text-2xl font-semibold mb-2 text-center">
               {isNewUser ? "Create Account" : "Login"}
-            </h2>
+            </h2> */}
             <form onSubmit={handleSubmit(submitForm)}>
               {isNewUser ? (
                 <>

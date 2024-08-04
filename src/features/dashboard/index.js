@@ -44,9 +44,9 @@ function Dashboard() {
   const filteredProducts = useMemo(() => filterProducts(products), [filterItem, products]);
 
   const statsData = [
-    { title: "Original Balance", value: userData?.balance || 0, icon: <BuildingStorefrontIcon className="w-8 h-8" />, description: "" },
-    { title: "Trial Balance", value: "0", icon: <CreditCardIcon className="w-8 h-8" />, description: "" },
-    { title: "Rewards & Bonus", value: userData?.rewards || 0, icon: <CircleStackIcon className="w-8 h-8" />, description: "" },
+    { title: "Original Balance", value: `$${userData?.balance || 0}`, icon: <BuildingStorefrontIcon className="w-8 h-8" />, description: "" },
+    { title: "Trial Balance", value: "$0", icon: <CreditCardIcon className="w-8 h-8" />, description: "" },
+    { title: "Rewards & Bonus", value: `$${userData?.rewards || 0}`, icon: <CircleStackIcon className="w-8 h-8" />, description: "" },
   ];
 
   return (
