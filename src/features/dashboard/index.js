@@ -20,6 +20,7 @@ function Dashboard() {
   const { data: allProducts, isLoading, isSuccess, isError, error } = useGetProductsQuery();
   const products = allProducts?.data?.products || [];
   const uniqueCategories = [...new Set(products.map(product => product.category.categoryName))];
+  console.log("uniqueCategories", uniqueCategories)
   const [filterItem, setFilterItem] = useState("");
 
   const userdata = localStorage.getItem("user");
@@ -67,9 +68,6 @@ function Dashboard() {
             <a className={`${filterItem === "" ? "bg-black text-white" : "bg-base-100"}`}>All Products</a>
           </li>
         </ul>
-      </div>
-      <div className="mt-4">
-        <button className="btn btn-primary" disabled={isReviewDisabled}>Review</button>
       </div>
       <div className={`grid lg:grid-cols-${isLoading ? "1" : "4"} mt-4 grid-cols-1 gap-6`}>
         {isLoading ? (
