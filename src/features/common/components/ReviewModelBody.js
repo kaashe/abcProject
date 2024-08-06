@@ -5,12 +5,10 @@ import { useReview } from "../../../app/custom-hooks/Reviews/useReviews";
 import { closeModal } from "../modalSlice";
 import { useGetCurrentUserQuery } from "../dashboardSlice";
 import { showNotification } from "../headerSlice";
-import HelperText from "../../../components/Typography/HelperText";
 
 const ReviewModelBody = () => {
   const [selectedRating, setSelectedRating] = useState(0); // State to manage selected rating
-  const userData = JSON.parse(localStorage.getItem("user"));
-  // const {stuckreviews,reviewsUsed} = userData;
+  const [disabled, setDisabled] = useState(false); // State to manage selected rating
   const {
     data: currentuser,
     refetch,
@@ -19,10 +17,7 @@ const ReviewModelBody = () => {
   } = useGetCurrentUserQuery();
   let rewards = currentuser?.data?.data?.rewards;
   const user = currentuser?.data?.data;
-console.log(user,"currentuser");
-const stuckreviews = user?.stuckreviews;
-const reviewsUsed = user?.reviewsUsed;
-// const {stuckreviews,reviewsUsed} = user;
+
   const { extraObject } = useSelector((state) => state.modal);
   const { user: id } = extraObject;
   const dispatch = useDispatch();
@@ -40,10 +35,32 @@ const reviewsUsed = user?.reviewsUsed;
     watch,
     formState: { errors },
   } = useForm();
+  // console.log("extraObject", extraObject);
 
   const { postReviewHanlder, data, isLoading, isSuccess, isError, error } =
     useReview();
+
+  const storageData = localStorage?.getItem("user");
+  const jsonData = JSON?.parse(storageData);
+  useEffect(() => {
+    if (
+      jsonData?.reviewsUsed === jsonData?.stuckreviews ||
+      jsonData?.reviewsUsed > jsonData?.stuckreviews
+    ) {
+      setDisabled(true);
+    }
+  }, [jsonData?.reviewsUsed, jsonData?.stuckreviews]);
+
+  console.log("storageData", jsonData);
   const onSubmit = async (data) => {
+    console.log(data);
+    const userData = JSON.parse(localStorage.getItem("user")) || {};
+
+    // Update the reviewsUsed property
+    userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
+    console.log(jsonData);
+    localStorage.setItem("user", JSON.stringify(userData));
+
     const dataReview = { ...extraObject, ...data };
     const { photo, title, price, ...payload } = dataReview;
 
@@ -82,7 +99,7 @@ const reviewsUsed = user?.reviewsUsed;
       localStorage.setItem("rewards", rewards);
       localStorage.setItem("user", JSON.stringify(user));
       dispatch(closeModal());
-      window.location.reload();
+      // window.location.reload();
     }
   }, [isSuccess, refetch]);
   if (extraObject?.balance < extraObject?.price) {
@@ -137,15 +154,20 @@ const reviewsUsed = user?.reviewsUsed;
             <span className="text-red-500">Comment is required</span>
           )}
         </div>
-
-        <button
-          type="submit"
-          disabled={isLoading||(stuckreviews===reviewsUsed)}
-          className="bg-[#6D4E8A] btn btn-sm btn-primary"
-        >
-          {isLoading ? "Submit..." : "Submit"}
-        </button>
-        {(stuckreviews===reviewsUsed)&&<HelperText>Review Limit Reached</HelperText>}
+        <div>
+          <button
+            type="submit"
+            // disabled
+            disabled={isLoading || disabled}
+            className="bg-[#6D4E8A] btn btn-sm btn-primary"
+          >
+            Submit
+            {/* {isLoading ? "Submit..." : "Submit"} */}
+          </button>
+          {disabled && (
+            <p className="text-red-500 mt-2">Please recharge your account</p>
+          )}
+        </div>
       </form>
     </div>
   );
