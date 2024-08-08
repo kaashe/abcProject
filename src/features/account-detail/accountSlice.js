@@ -12,7 +12,7 @@ export const accountSlice = apiSlice.injectEndpoints({
     editUser: builder.mutation({
       query: (initialPost) => ({
         url: "users/updateMe",
-        method: "POST",
+        method: "PATCH",
         body: initialPost,
       }),
       invalidatesTags: ["editUser"],
