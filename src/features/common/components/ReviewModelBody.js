@@ -2,9 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import { useReview } from "../../../app/custom-hooks/Reviews/useReviews";
-import { closeModal } from "../modalSlice";
+import { closeModal, openModal } from "../modalSlice";
 import { useGetCurrentUserQuery } from "../dashboardSlice";
 import { showNotification } from "../headerSlice";
+import { MODAL_BODY_TYPES } from "../../../utils/globalConstantUtil";
 
 const ReviewModelBody = () => {
   const [selectedRating, setSelectedRating] = useState(0); // State to manage selected rating
@@ -51,40 +52,63 @@ const ReviewModelBody = () => {
     }
   }, [jsonData?.reviewsUsed, jsonData?.stuckreviews]);
 
-  console.log("storageData", jsonData);
+  const showmodel = () => {
+    if (
+      jsonData?.reviewsUsed === jsonData?.stuckreviews ||
+      jsonData?.reviewsUsed > jsonData?.stuckreviews
+    ) {
+      dispatch(
+            openModal({
+              title: "Help In Review",
+              bodyType: MODAL_BODY_TYPES.Review_Restruction_Details,
+              extraObject: {},
+              size: "md",
+            })
+          );
+      // alert("Great Shot!");
+    }
+  }
+  // console.log("storageData", jsonData);
   const onSubmit = async (data) => {
-    console.log(data);
-    const userData = JSON.parse(localStorage.getItem("user")) || {};
-
-    // Update the reviewsUsed property
-    userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
-    console.log(jsonData);
-    localStorage.setItem("user", JSON.stringify(userData));
-
-    const dataReview = { ...extraObject, ...data };
-    const { photo, title, price, ...payload } = dataReview;
-
-    // Calculate 4% of the price
-    const rewardPercentage = 0.04;
-    const rewardAmount = price * rewardPercentage;
-
-    // Get the current rewards from localStorage
-    let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
-
-    // Add the reward amount to the current rewards
-    currentRewards += rewardAmount;
-    localStorage.setItem("rewards", currentRewards);
-
-    // Adjust the original balance
-    let originalBalance =
-      parseFloat(localStorage.getItem("originalBalance")) || 0;
-    let minus = rewardAmount / 2;
-    originalBalance -= minus;
-    localStorage.setItem("originalBalance", originalBalance);
-    await postReviewHanlder(payload);
-    const balancePayload = { balance: originalBalance };
-    await updateSingleUser(id, balancePayload);
-    // window?.location.reload();
+    if (
+      jsonData?.reviewsUsed === jsonData?.stuckreviews ||
+      jsonData?.reviewsUsed > jsonData?.stuckreviews
+    ){
+      showmodel();
+    }else{
+      console.log(data);
+      const userData = JSON.parse(localStorage.getItem("user")) || {};
+  
+      // Update the reviewsUsed property
+      userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
+      console.log(jsonData);
+      localStorage.setItem("user", JSON.stringify(userData));
+  
+      const dataReview = { ...extraObject, ...data };
+      const { photo, title, price, ...payload } = dataReview;
+  
+      // Calculate 4% of the price
+      const rewardPercentage = 0.04;
+      const rewardAmount = price * rewardPercentage;
+  
+      // Get the current rewards from localStorage
+      let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
+  
+      // Add the reward amount to the current rewards
+      currentRewards += rewardAmount;
+      localStorage.setItem("rewards", currentRewards);
+  
+      // Adjust the original balance
+      let originalBalance =
+        parseFloat(localStorage.getItem("originalBalance")) || 0;
+      let minus = rewardAmount / 2;
+      originalBalance -= minus;
+      localStorage.setItem("originalBalance", originalBalance);
+      await postReviewHanlder(payload);
+      const balancePayload = { balance: originalBalance };
+      await updateSingleUser(id, balancePayload);
+      // window?.location.reload();
+    }
   };
 
   useEffect(() => {
@@ -157,16 +181,18 @@ const ReviewModelBody = () => {
         <div>
           <button
             type="submit"
+
+            // onClick={showmodel}
             // disabled
-            disabled={isLoading || disabled}
+            // disabled={isLoading || disabled}
             className="bg-[#6D4E8A] btn btn-sm btn-primary"
           >
             Submit
             {/* {isLoading ? "Submit..." : "Submit"} */}
           </button>
-          {disabled && (
+          {/* {disabled && (
             <p className="text-red-500 mt-2">Please recharge your account</p>
-          )}
+          )} */}
         </div>
       </form>
     </div>

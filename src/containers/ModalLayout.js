@@ -13,6 +13,7 @@ import UseDetails from "../features/about-us/components/UseDetails";
 import TermscondationDetails from "../features/about-us/components/TermscondationDetails";
 import EditUserModalBody from "../features/account-detail/component/Edituser";
 import StuckBundleDetails from "../features/about-us/components/StuckBundle";
+import { ReviewRestrication } from "../features/common/components/ReviewRestrication";
 
 function ModalLayout() {
   const { isOpen, bodyType, size, extraObject, title } = useSelector(
@@ -63,6 +64,14 @@ function ModalLayout() {
                   extraObject={extraObject}
                 />
               ),
+              // Review Restruction
+              [MODAL_BODY_TYPES.Review_Restruction_Details]: (
+                <ReviewRestrication
+                  closeModal={close}
+                  extraObject={extraObject}
+                />
+              ),
+
               [MODAL_BODY_TYPES.WITHDRAW_REQUEST]: (
                 <WithdrawAmountModal
                   closeModal={close}
