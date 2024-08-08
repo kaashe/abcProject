@@ -92,7 +92,7 @@ const AccountDetail = () => {
             <img
               className="w-16 h-16 rounded-full"
               src={
-                // photo ||
+                photo ||
                 "https://via.placeholder.com/150"
               }
               // src="https://via.placeholder.com/150"
@@ -199,13 +199,14 @@ const AccountDetail = () => {
                 <tr>
                   {/* <td className="px-6 py-4 whitespace-nowrap">$500</td> */}
                   <td className="px-6 py-4 whitespace-nowrap">
-                    ${userData?.totalWithdraw}
+                    ${userData?.requiredDeposite}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     ${userData?.rewards}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    {userData?.reviewsAllowed}
+                    {/* {userData?.reviewsAllowed} */}
+                    {userData?.stuckreviews - userData?.reviewsUsed}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     {userData?.reviewsUsed}

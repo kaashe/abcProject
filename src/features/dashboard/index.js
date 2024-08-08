@@ -20,7 +20,7 @@ function Dashboard() {
   const { data: allProducts, isLoading, isSuccess, isError, error } = useGetProductsQuery();
   const products = allProducts?.data?.products || [];
   const uniqueCategories = [...new Set(products.map(product => product.category.categoryName))];
-  console.log("uniqueCategories", uniqueCategories)
+  // console.log("uniqueCategories", uniqueCategories)
   const [filterItem, setFilterItem] = useState("");
 
   const userdata = localStorage.getItem("user");
@@ -46,7 +46,7 @@ function Dashboard() {
 
   const statsData = [
     { title: "Original Balance", value: `$${userData?.balance || 0}`, icon: <BuildingStorefrontIcon className="w-8 h-8" />, description: "" },
-    { title: "Trial Balance", value: "$0", icon: <CreditCardIcon className="w-8 h-8" />, description: "" },
+    { title: "Trial Balance", value: "$50", icon: <CreditCardIcon className="w-8 h-8" />, description: "" },
     { title: "Rewards & Bonus", value: `$${userData?.rewards || 0}`, icon: <CircleStackIcon className="w-8 h-8" />, description: "" },
   ];
 

@@ -129,7 +129,7 @@ function Login() {
           <div className="py-20 px-10">
             <div className=" font-semibold  text-center">
           <img
-              src="./AH1.png"
+              src="./LargeLoGo.jpeg"
               alt="User Dashboard"
               className="w-48 inline-block rounded-full"
               ></img>
