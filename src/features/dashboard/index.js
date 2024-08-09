@@ -24,7 +24,9 @@ function Dashboard() {
   const [filterItem, setFilterItem] = useState("");
 
   const userdata = localStorage.getItem("user");
-  const userData = JSON.parse(userdata);
+
+  // const userData = JSON.parse(userdata);
+  const userData = userdata ? JSON.parse(userdata) : {};
 
   // Retrieve stuckreviews and reviewsUsed from localStorage
   const stuckreviews = localStorage.getItem("stuckreviews");
