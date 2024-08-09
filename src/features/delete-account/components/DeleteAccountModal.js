@@ -17,6 +17,7 @@ const DeleteAccountModal = ({ closeModal }) => {
       // Handle errors, e.g., show an error message
       console.error("Failed to delete account:", error);
     }
+    closeModal();
   };
 
   return (
