@@ -59,7 +59,7 @@ const ReviewModelBody = () => {
     ) {
       dispatch(
             openModal({
-              title: "Help In Review",
+              title: "Stock bondle",
               bodyType: MODAL_BODY_TYPES.Review_Restruction_Details,
               extraObject: {},
               size: "md",
