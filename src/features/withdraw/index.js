@@ -24,6 +24,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
     _id,
     address,
     balance,
+    totalBalance,
     email,
     fullname,
     isApproved,
@@ -218,7 +219,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
               </svg>
             </div>
             <h2 className="text-lg font-bold mb-2 text-[#ea580c]">
-              Total Earnings: {balance}$
+              Total Earnings: {totalBalance}$
             </h2>
             <h2 className="text-lg font-bold mb-2">
               USDT is the safer, easier way to pay

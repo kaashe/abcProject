@@ -17,7 +17,7 @@ export const ReviewRestrication = () => {
       <p>Required Deposit: {requiredDeposite !== null ? requiredDeposite : 'Not set'}</p>
       <p>Stock Commission: {stuckCommission !== null ? stuckCommission : 'Not set'}</p>
       <h1 align="center"><b>Contact To Customer Services</b></h1>
-      <p>Congratulations you have received Stock bundle product.Please recharge the required deposit in your account. Then you will be allowed to give further reviews.</p>
+      <p>Congratulations you have received Stock bundle product(x10). Please recharge the required deposit in your account. Then you will be allowed to give further reviews.</p>
     </div>
   );
 };
