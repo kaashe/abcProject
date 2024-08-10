@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { openModal } from "../common/modalSlice";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 import { useGetCurrentUserQuery } from "../common/dashboardSlice";
-import { useDeleteUserMutation } from "./accountSlice";
+import { useDeleteUserMutation, useGetUserQuery } from "./accountSlice";
 
 const AccountDetail = () => {
   const dispatch = useDispatch();
@@ -40,6 +40,10 @@ const AccountDetail = () => {
       })
     );
   };
+  const  Detailsdata  = useGetUserQuery();
+  console.log("dataaaaaa",Detailsdata)
+  const AccountData = Detailsdata?.data?.data?.data
+  console.log("AccountData",AccountData)
 
   // const handleDeleteClick = async () => {
   //   try {
@@ -100,10 +104,10 @@ const AccountDetail = () => {
             />
             <div className="ml-4">
               <h2 className="text-2xl font-semibold text-[#ea580c]">
-                {fullname}
+                {AccountData?.fullname}
               </h2>
-              <p className="text-gray-600">{role}</p>
-              <p className="text-gray-600">{address}</p>
+              <p className="text-gray-600">{AccountData?.role}</p>
+              <p className="text-gray-600">{AccountData?.address}</p>
             </div>
             {/* <button className="ml-auto bg-[#6D4E8A] text-white px-4 py-2  rounded-lg focus:ring-gray-300">
               Edit
@@ -126,11 +130,11 @@ const AccountDetail = () => {
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label className="text-gray-600">Email Address</label>
-                <p className="text-gray-800">{email}</p>
+                <p className="text-gray-800">{AccountData?.email}</p>
               </div>
               <div>
                 <label className="text-gray-600">Phone</label>
-                <p className="text-gray-800">{phone}</p>
+                <p className="text-gray-800">{AccountData?.phone}</p>
               </div>
             </div>
           </div>
