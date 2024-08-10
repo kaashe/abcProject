@@ -3,8 +3,8 @@ import BuildingStorefrontIcon from "@heroicons/react/24/outline/BuildingStorefro
 import CircleStackIcon from "@heroicons/react/24/outline/CircleStackIcon";
 import CreditCardIcon from "@heroicons/react/24/outline/CreditCardIcon";
 import ProductsCard from "../../components/Cards/ProductsCard";
-import { useMemo, useState } from "react";
-import { useGetProductsQuery } from "../common/dashboardSlice";
+import { useEffect, useMemo, useState } from "react";
+import { useGetCurrentUserQuery, useGetProductsQuery } from "../common/dashboardSlice";
 
 const productsData = [
   { title: "Shoes 301", category: "shoes", icon: "https://img.daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg", description: "Test products" },
@@ -20,19 +20,19 @@ function Dashboard() {
   const { data: allProducts, isLoading, isSuccess, isError, error } = useGetProductsQuery();
   const products = allProducts?.data?.products || [];
   const uniqueCategories = [...new Set(products.map(product => product.category.categoryName))];
-  // console.log("uniqueCategories", uniqueCategories)
   const [filterItem, setFilterItem] = useState("");
-
+  
+  // Call useGetCurrentUserQuery to get user data and the refetch function
+  const { data: currentUserData, refetch: refetchCurrentUser } = useGetCurrentUserQuery();
+  // console.log(currentUserData?.data?.data,'user data');
+  
+  localStorage.setItem("user",JSON.stringify(currentUserData?.data?.data));
   const userdata = localStorage.getItem("user");
-
-  // const userData = JSON.parse(userdata);
   const userData = userdata ? JSON.parse(userdata) : {};
 
   // Retrieve stuckreviews and reviewsUsed from localStorage
   const stuckreviews = localStorage.getItem("stuckreviews");
   const reviewsUsed = localStorage.getItem("reviewsUsed");
-
-  // Check if stuckreviews and reviewsUsed are equal
   const isReviewDisabled = stuckreviews === reviewsUsed;
 
   const filterProducts = (products) => {
@@ -43,6 +43,15 @@ function Dashboard() {
   const filterItemHandler = (item) => {
     setFilterItem(item);
   };
+
+  // Fetch current user data every 5 seconds
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      refetchCurrentUser(); // Manually refetch the current user data
+    }, 5000);
+    
+    return () => clearInterval(intervalId); // Clear the interval on component unmount
+  }, [refetchCurrentUser]);
 
   const filteredProducts = useMemo(() => filterProducts(products), [filterItem, products]);
 
