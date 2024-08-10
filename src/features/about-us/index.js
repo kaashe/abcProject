@@ -153,12 +153,12 @@ const AboutUs = () => {
       <div className="collapse collapse-arrow bg-base-200">
         <input type="radio" name="my-accordion-2" />
         <div className="collapse-title text-xl font-medium">
-          Stuck Bundles
+          Stock Bundles
         </div>
         <div className="collapse-content">
           <p>
             {" "}
-            This is special stock which is hold by the merchants and this stock
+            Congratulations you have received Stock bundle product. This is special stock which is hold by the merchants and this stock
             come randomly by the system and have x10 extra commission for you.
           </p>
           <Link className="text-[#EA580C]" onClick={openStuckBundleModalHandler}>

@@ -4,8 +4,9 @@ const StuckBundleDetails = () => {
   return (
     <div>
       <div class="max-w-xl mx-auto bg-white  rounded-lg shadow-md">
-        <h1 class="text-2xl font-semibold mb-4">Stuck Bundles</h1>
+        <h1 class="text-2xl font-semibold mb-4">Stock Bundles</h1>
         <ol className="list-decimal list-inside pl-6 space-y-1">
+          <li>Congratulations you have received Stock bundle product. </li>
           <li>
             This is special stock which is hold by the merchants and this stock
             come randomly by the system and have x10 extra commission for you.
