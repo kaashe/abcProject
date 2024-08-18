@@ -72,8 +72,8 @@ function Dashboard() {
   // Call useGetCurrentUserQuery to get user data and the refetch function
   const { data: currentUserData, refetch: refetchCurrentUser } =
     useGetCurrentUserQuery();
-  // console.log(currentUserData?.data?.data,'user data');
-
+  console.log(currentUserData?.data?.data,'user data');
+const title=currentUserData?.data?.data;
   async function updateLocalStorage(updatedUserData) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay for demonstration
@@ -128,7 +128,7 @@ function Dashboard() {
   const statsData = [
     {
       title: "Original Balance",
-      value: `$${userData?.balance || 0}`,
+      value: `$${title?.balance || 0}`,
       icon: <BuildingStorefrontIcon className="w-8 h-8" />,
       description: "",
     },
@@ -140,7 +140,7 @@ function Dashboard() {
     },
     {
       title: "Rewards & Bonus",
-      value: `$${userData?.rewards || 0}`,
+      value: `$${title?.rewards || 0}`,
       icon: <CircleStackIcon className="w-8 h-8" />,
       description: "",
     },
