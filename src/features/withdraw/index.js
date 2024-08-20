@@ -41,10 +41,10 @@ const WithDraw = ({ closeModal, extraObject }) => {
         message: "Amount exceeds available balance",
       });
       return;
-    } else if (data?.amount < 500) {
+    } else if (data?.amount < 5) {
       setError("amount", {
         type: "manual",
-        message: "Min 500 is Allowed",
+        message: "Min 5 is Allowed",
       });
       return;
     }
