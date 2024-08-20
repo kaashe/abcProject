@@ -30,7 +30,6 @@ const AccountDetail = () => {
 
   const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
 
-
   const confirmDeleteClick = () => {
     dispatch(
       openModal({
@@ -40,10 +39,10 @@ const AccountDetail = () => {
       })
     );
   };
-  const  Detailsdata  = useGetUserQuery();
-  console.log("dataaaaaa",Detailsdata)
-  const AccountData = Detailsdata?.data?.data?.data
-  console.log("AccountData",AccountData)
+  const Detailsdata = useGetUserQuery();
+  console.log("dataaaaaa", Detailsdata);
+  const AccountData = Detailsdata?.data?.data?.data;
+  console.log("AccountData", AccountData);
 
   // const handleDeleteClick = async () => {
   //   try {
@@ -95,10 +94,7 @@ const AccountDetail = () => {
           <div className="flex items-center">
             <img
               className="w-16 h-16 rounded-full"
-              src={
-                photo ||
-                "https://via.placeholder.com/150"
-              }
+              src={photo || "https://via.placeholder.com/150"}
               // src="https://via.placeholder.com/150"
               alt="Profile"
             />
@@ -117,15 +113,18 @@ const AccountDetail = () => {
 
         {/* Personal Information */}
         <div className="shadow rounded-lg p-6 mt-6">
-          <div className="flex justify-between items-center">
-            <h3 className="text-lg font-semibold">Personal Information</h3>
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center">
+            <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-0">
+              Personal Information
+            </h3>
             <button
               onClick={EditUser}
-              className="bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300"
+              className="w-full sm:w-auto bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300"
             >
               Edit
             </button>
           </div>
+
           <div className="mt-4">
             <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-4">
               <div>
@@ -138,12 +137,12 @@ const AccountDetail = () => {
               </div>
             </div>
           </div>
-          <div className="mt-4 flex">
-            <h3 className="text-lg font-semibold">
+          <div className="mt-4 flex flex-col sm:flex-row items-start sm:items-center">
+            <h3 className="text-base sm:text-lg font-semibold mb-2 sm:mb-0">
               Do you want to delete your account?
             </h3>
             <button
-              className="ml-auto bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300"
+              className="w-full sm:w-auto ml-0 sm:ml-auto bg-[#6D4E8A] text-white px-4 py-2 rounded-lg focus:ring-gray-300"
               onClick={confirmDeleteClick}
               disabled={isDeleting}
             >
@@ -163,37 +162,37 @@ const AccountDetail = () => {
                 <tr>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Required Deposit
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Reward Balance
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Pending Review
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Used Review
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Total Balance
                   </th>
                   <th
                     scope="col"
-                    className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                    className="px-3 py-2 sm:px-6 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                   >
                     Status
                   </th>
@@ -201,24 +200,22 @@ const AccountDetail = () => {
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
                 <tr>
-                  {/* <td className="px-6 py-4 whitespace-nowrap">$500</td> */}
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     ${userData?.requiredDeposite}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     ${userData?.rewards}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    {/* {userData?.reviewsAllowed} */}
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     {userData?.stuckreviews - userData?.reviewsUsed}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     {userData?.reviewsUsed}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     ${userData?.totalBalance}
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-green-500">
+                  <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-green-500">
                     {userData?.status}
                   </td>
                 </tr>
