@@ -219,8 +219,8 @@ const WithDraw = ({ closeModal, extraObject }) => {
               </svg>
             </div>
             <h2 className="text-lg font-bold mb-2 text-[#ea580c]">
-              Total Earnings: {totalBalance}$
-            </h2>
+  Total Earnings: {totalBalance?.toFixed(2)}$
+</h2>
             <h2 className="text-lg font-bold mb-2">
               USDT is the safer, easier way to pay
             </h2>

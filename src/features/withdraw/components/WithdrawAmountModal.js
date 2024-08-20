@@ -9,7 +9,7 @@ const WithdrawAmountModal = ({closeModal}) => {
           className="btn btn-sm btn-glass"
           onClick={() => closeModal()}
         >
-          Cancel
+          Okay
         </button>
         {/* <button
           type="submit"

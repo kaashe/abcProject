@@ -213,7 +213,7 @@ const AccountDetail = () => {
                     {userData?.reviewsUsed}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
-                    ${userData?.totalBalance}
+                    ${userData?.totalBalance?.toFixed(2)}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap text-green-500">
                     {userData?.status}

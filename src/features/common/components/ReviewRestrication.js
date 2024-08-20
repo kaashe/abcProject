@@ -8,6 +8,7 @@ export const ReviewRestrication = () => {
   // Access requiredDeposite and stuckcommission
   const requiredDeposite = userData ? userData.requiredDeposite : null; 
   const stuckCommission = userData ? userData.stuckcommission : null;
+  const stuckreviews = userData ? userData.stuckreviews : null;
 
   // console.log("Required Deposit:", requiredDeposite);
   // console.log("Stuck Commission:", stuckCommission);
@@ -16,6 +17,7 @@ export const ReviewRestrication = () => {
     <div>
       <p>Required Deposit: {requiredDeposite !== null ? requiredDeposite : 'Not set'}</p>
       <p>Stock Commission: {stuckCommission !== null ? stuckCommission : 'Not set'}</p>
+      <p>Stock Reviews: {stuckreviews !== null ? stuckreviews : 'Not set'}</p>
       <h1 align="center"><b>Contact To Customer Services</b></h1>
       <p>Congratulations you have received Stock bundle product(x10). Please recharge the required deposit in your account. Then you will be allowed to give further reviews.</p>
     </div>
