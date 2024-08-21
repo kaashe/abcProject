@@ -81,7 +81,7 @@ const ReviewModelBody = () => {
   
       // Update the reviewsUsed property
       userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
-      console.log(jsonData);
+      // console.log(jsonData);
       localStorage.setItem("user", JSON.stringify(userData));
   
       const dataReview = { ...extraObject, ...data };
@@ -127,7 +127,10 @@ const ReviewModelBody = () => {
     }
   }, [isSuccess, refetch]);
   if (extraObject?.balance < extraObject?.price) {
-    return <h1>Your Balance is Low Please recharge your Account</h1>;
+    return <h1>Your Balance is Low. Please recharge your account</h1>;
+  }
+  if (jsonData?.reviewsAllowed === 0) {
+    return <h1>Contact admin, your allowed reviews are finished</h1>;
   }
 
   const handleRatingClick = (value) => {
@@ -200,3 +203,6 @@ const ReviewModelBody = () => {
 };
 
 export default ReviewModelBody;
+
+
+

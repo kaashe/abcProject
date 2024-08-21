@@ -14,6 +14,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
     formState: { errors },
   } = useForm();
   const [selectedMethod, setSelectedMethod] = useState(null);
+
   const dispatch = useDispatch();
 
   const handlePaymentMethodClick = (method) => {
@@ -25,6 +26,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
     address,
     balance,
     totalBalance,
+    reviewsAllowed,
     email,
     fullname,
     isApproved,
@@ -33,6 +35,8 @@ const WithDraw = ({ closeModal, extraObject }) => {
     role,
     status,
   } = JSON.parse(localStorage.getItem("user"));
+  console.log("first", reviewsAllowed);
+
   const { postWithdraw, isLoading, isSuccess, isError, error } = useWithdraw();
   const onSubmit = async (data) => {
     if (data?.amount > balance) {
@@ -199,7 +203,12 @@ const WithDraw = ({ closeModal, extraObject }) => {
 
             <button
               type="submit"
-              className="bg-[#6D4E8A] text-white py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className={`py-2 px-6 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+                reviewsAllowed !== 0
+                  ? "bg-gray-300 cursor-not-allowed"
+                  : "bg-[#6D4E8A] text-white"
+              }`}
+              disabled={reviewsAllowed !== 0}
             >
               SUBMIT REQUEST
             </button>
@@ -219,8 +228,8 @@ const WithDraw = ({ closeModal, extraObject }) => {
               </svg>
             </div>
             <h2 className="text-lg font-bold mb-2 text-[#ea580c]">
-  Total Earnings: {totalBalance?.toFixed(2)}$
-</h2>
+              Total Earnings: {totalBalance?.toFixed(2)}$
+            </h2>
             <h2 className="text-lg font-bold mb-2">
               USDT is the safer, easier way to pay
             </h2>
