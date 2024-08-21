@@ -204,10 +204,11 @@ const AccountDetail = () => {
                     ${userData?.requiredDeposite}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
-                    ${userData?.rewards}
+                  ${userData?.rewards?.toFixed(2) || "0.00"}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
-                    {userData?.stuckreviews - userData?.reviewsUsed}
+                    {userData?.reviewsAllowed}
+                    {/* {userData?.stuckreviews - userData?.reviewsUsed} */}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     {userData?.reviewsUsed}
