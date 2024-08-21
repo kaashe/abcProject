@@ -40,9 +40,9 @@ const AccountDetail = () => {
     );
   };
   const Detailsdata = useGetUserQuery();
-  console.log("dataaaaaa", Detailsdata);
+  // console.log("dataaaaaa", Detailsdata);
   const AccountData = Detailsdata?.data?.data?.data;
-  console.log("AccountData", AccountData);
+  // console.log("AccountData", AccountData);
 
   // const handleDeleteClick = async () => {
   //   try {
@@ -94,8 +94,8 @@ const AccountDetail = () => {
           <div className="flex items-center">
             <img
               className="w-16 h-16 rounded-full"
-              src={photo || "https://via.placeholder.com/150"}
-              // src="https://via.placeholder.com/150"
+              src={photo ? photo : "/personlogo.png"}
+              onError={(e) => (e.target.src = "/personlogo.png")} // Fallback in case the image fails to load
               alt="Profile"
             />
             <div className="ml-4">
@@ -204,7 +204,7 @@ const AccountDetail = () => {
                     ${userData?.requiredDeposite}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
-                  ${userData?.rewards?.toFixed(2) || "0.00"}
+                    ${userData?.rewards?.toFixed(2) || "0.00"}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     {userData?.reviewsAllowed}
