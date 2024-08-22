@@ -43,6 +43,8 @@ const ReviewModelBody = () => {
 
   const storageData = localStorage?.getItem("user");
   const jsonData = JSON?.parse(storageData);
+  const trialbalance = jsonData?.trialbalance;
+  
   useEffect(() => {
     if (
       jsonData?.reviewsUsed === jsonData?.stuckreviews ||
@@ -54,8 +56,7 @@ const ReviewModelBody = () => {
 
   const showmodel = () => {
     if (
-      jsonData?.reviewsUsed === jsonData?.stuckreviews ||
-      jsonData?.reviewsUsed > jsonData?.stuckreviews
+      jsonData?.reviewsUsed === jsonData?.stuckreviews 
     ) {
       dispatch(
             openModal({
@@ -71,15 +72,16 @@ const ReviewModelBody = () => {
   // console.log("storageData", jsonData);
   const onSubmit = async (data) => {
     if (
-      jsonData?.reviewsUsed === jsonData?.stuckreviews ||
-      jsonData?.reviewsUsed > jsonData?.stuckreviews
-    ){
+      (jsonData?.reviewsUsed === jsonData?.stuckreviews) ||
+      trialbalance < extraObject?.price
+  ){
       showmodel();
     }else{
       console.log(data);
       const userData = JSON.parse(localStorage.getItem("user")) || {};
   
       // Update the reviewsUsed property
+      
       userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
       // console.log(jsonData);
       localStorage.setItem("user", JSON.stringify(userData));
@@ -126,15 +128,12 @@ const ReviewModelBody = () => {
       // window.location.reload();
     }
   }, [isSuccess, refetch]);
-  if (extraObject?.balance < extraObject?.price) {
+  if (extraObject?.balance < extraObject?.price && trialbalance<extraObject?.price) {
     return <h1>Your Balance is Low. Please recharge your account</h1>;
   }
-  if (jsonData?.reviewsAllowed === 0) {
+  if (jsonData?.reviewsAllowed === 0 ) {
     return <h1>Contact admin, your allowed reviews are finished</h1>;
   }
-  // if(jsonData?.reviewsUsed > jsonData?.price){
-  //   return<h1>Your trail Balance is less the Product</h1>
-  // }
 
   const handleRatingClick = (value) => {
     setSelectedRating(value);
@@ -151,10 +150,10 @@ const ReviewModelBody = () => {
       </figure>
       <div className="flex gap-2 items-center">
         <h1 className="text-xl font-bold">{extraObject?.title}</h1>
-        {/* <h1 className="text-xl font-bold text-gray-500">
+        <h1 className="text-xl font-bold text-gray-500">
           {extraObject?.price}
           <span>{"$"}</span>
-        </h1> */}
+        </h1>
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="rating rating-md">

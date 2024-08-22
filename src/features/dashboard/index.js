@@ -143,7 +143,7 @@ const title=currentUserData?.data?.data;
         .catch((error) => {
           console.error("Error fetching current user data:", error);
         });
-    }, 3000);
+    }, 4000);
 
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [filterItem, products, refetchCurrentUser]);
@@ -193,6 +193,13 @@ const title=currentUserData?.data?.data;
     {
       title: "Rewards & Bonus",
       value: `$${(title?.rewards || 0).toFixed(2)}`, // Show balance with 2 decimal places
+      // value: `$${title?.rewards || 0}`,
+      icon: <CircleStackIcon className="w-8 h-8" />,
+      description: "",
+    },
+    {
+      title: "Trial Reward",
+      value: `$${(title?.trialReward || 0).toFixed(2)}`, // Show balance with 2 decimal places
       // value: `$${title?.rewards || 0}`,
       icon: <CircleStackIcon className="w-8 h-8" />,
       description: "",
