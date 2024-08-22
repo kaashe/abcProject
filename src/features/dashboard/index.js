@@ -75,7 +75,7 @@ function Dashboard() {
   } = useGetProductsQuery();
   const products = allProducts?.data?.products || [];
   const uniqueCategories = [
-    ...new Set(products.map((product) => product.category.categoryName)),
+    ...new Set(products.map((product) => product?.category?.categoryName)),
   ];
 
   const [filteredProducts, setFilteredProducts] = useState([]);
@@ -143,7 +143,7 @@ const title=currentUserData?.data?.data;
         .catch((error) => {
           console.error("Error fetching current user data:", error);
         });
-    }, 5000);
+    }, 3000);
 
     return () => clearInterval(intervalId); // Clear interval on component unmount
   }, [filterItem, products, refetchCurrentUser]);
@@ -185,7 +185,8 @@ const title=currentUserData?.data?.data;
     },
     {
       title: "Trial Balance",
-      value: "$50",
+      value: `$${(title?.trialbalance || 0).toFixed(2)}`, // Show balance with 2 decimal places
+      // value: "$50",
       icon: <CreditCardIcon className="w-8 h-8" />,
       description: "",
     },

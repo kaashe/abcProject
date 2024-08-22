@@ -132,6 +132,9 @@ const ReviewModelBody = () => {
   if (jsonData?.reviewsAllowed === 0) {
     return <h1>Contact admin, your allowed reviews are finished</h1>;
   }
+  // if(jsonData?.reviewsUsed > jsonData?.price){
+  //   return<h1>Your trail Balance is less the Product</h1>
+  // }
 
   const handleRatingClick = (value) => {
     setSelectedRating(value);
@@ -148,10 +151,10 @@ const ReviewModelBody = () => {
       </figure>
       <div className="flex gap-2 items-center">
         <h1 className="text-xl font-bold">{extraObject?.title}</h1>
-        <h1 className="text-xl font-bold text-gray-500">
+        {/* <h1 className="text-xl font-bold text-gray-500">
           {extraObject?.price}
           <span>{"$"}</span>
-        </h1>
+        </h1> */}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="rating rating-md">
