@@ -45,18 +45,18 @@ const ReviewModelBody = () => {
   const jsonData = JSON?.parse(storageData);
   const trialbalance = jsonData?.trialbalance;
   
-  useEffect(() => {
-    if (
-      jsonData?.reviewsUsed === jsonData?.stuckreviews ||
-      jsonData?.reviewsUsed > jsonData?.stuckreviews
-    ) {
-      setDisabled(true);
-    }
-  }, [jsonData?.reviewsUsed, jsonData?.stuckreviews]);
+  // useEffect(() => {
+  //   if (
+  //     jsonData?.reviewsUsed === jsonData?.stuckreviews ||
+  //     jsonData?.reviewsUsed > jsonData?.stuckreviews
+  //   ) {
+  //     setDisabled(true);
+  //   }
+  // }, [jsonData?.reviewsUsed, jsonData?.stuckreviews]);
 
   const showmodel = () => {
     if (
-      jsonData?.reviewsUsed === jsonData?.stuckreviews 
+      jsonData?.reviewsAllowed === jsonData?.stuckreviews 
     ) {
       dispatch(
             openModal({
@@ -69,10 +69,10 @@ const ReviewModelBody = () => {
       // alert("Great Shot!");
     }
   }
-  // console.log("storageData", jsonData);
+  console.log("jsonData", jsonData);
   const onSubmit = async (data) => {
     if (
-      (jsonData?.reviewsUsed === jsonData?.stuckreviews) ||
+      (jsonData?.reviewsAllowed === jsonData?.stuckreviews) ||
       trialbalance < extraObject?.price
   ){
       showmodel();
@@ -83,7 +83,7 @@ const ReviewModelBody = () => {
       // Update the reviewsUsed property
       
       userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
-      // console.log(jsonData);
+      console.log(jsonData);
       localStorage.setItem("user", JSON.stringify(userData));
   
       const dataReview = { ...extraObject, ...data };
@@ -150,10 +150,10 @@ const ReviewModelBody = () => {
       </figure>
       <div className="flex gap-2 items-center">
         <h1 className="text-xl font-bold">{extraObject?.title}</h1>
-        <h1 className="text-xl font-bold text-gray-500">
+        {/* <h1 className="text-xl font-bold text-gray-500">
           {extraObject?.price}
           <span>{"$"}</span>
-        </h1>
+        </h1> */}
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="rating rating-md">
