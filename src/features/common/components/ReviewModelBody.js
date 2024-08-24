@@ -36,7 +36,7 @@ const ReviewModelBody = () => {
     watch,
     formState: { errors },
   } = useForm();
-  // console.log("extraObject", extraObject);
+  console.log("extraObject", extraObject);
 
   const { postReviewHanlder, data, isLoading, isSuccess, isError, error } =
     useReview();
@@ -54,86 +54,177 @@ const ReviewModelBody = () => {
   //   }
   // }, [jsonData?.reviewsUsed, jsonData?.stuckreviews]);
 
-  const showmodel = () => {
-    if (
-      jsonData?.reviewsAllowed === jsonData?.stuckreviews 
-    ) {
-      dispatch(
-            openModal({
-              title: "Stock bundle",
-              bodyType: MODAL_BODY_TYPES.Review_Restruction_Details,
-              extraObject: {},
-              size: "md",
-            })
-          );
-      // alert("Great Shot!");
-    }
+  const showmodel = (title, bodyType) => {
+    dispatch(
+      openModal({
+        title: "Stock bundle",
+        bodyType: MODAL_BODY_TYPES.Review_Restruction_Details,
+        extraObject: {},
+        size: "md",
+      })
+    );
   }
-  console.log("jsonData", jsonData);
+  // console.log("jsonData", jsonData);
   const onSubmit = async (data) => {
-    if (
-      (jsonData?.reviewsAllowed === jsonData?.stuckreviews) ||
-      trialbalance < extraObject?.price
-  ){
-      showmodel();
-    }else{
-      console.log(data);
-      const userData = JSON.parse(localStorage.getItem("user")) || {};
-  
-      // Update the reviewsUsed property
-      
-      userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
-      console.log(jsonData);
-      localStorage.setItem("user", JSON.stringify(userData));
-  
-      const dataReview = { ...extraObject, ...data };
-      const { photo, title, price, ...payload } = dataReview;
-  
-      // Calculate 4% of the price
-      const rewardPercentage = 0.04;
-      const rewardAmount = price * rewardPercentage;
-  
-      // Get the current rewards from localStorage
-      let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
-  
-      // Add the reward amount to the current rewards
-      currentRewards += rewardAmount;
-      localStorage.setItem("rewards", currentRewards);
-  
-      // Adjust the original balance
-      let originalBalance =
-        parseFloat(localStorage.getItem("originalBalance")) || 0;
-      let minus = rewardAmount / 2;
-      originalBalance -= minus;
-      localStorage.setItem("originalBalance", originalBalance);
-      await postReviewHanlder(payload);
-      const balancePayload = { balance: originalBalance };
-      await updateSingleUser(id, balancePayload);
-      // window?.location.reload();
-    }
-  };
 
-  useEffect(() => {
-    if (isSuccess) {
-      dispatch(
-        showNotification({
-          message: "Review Submitted!",
-          status: 1,
-        })
-      );
-      refetch();
-      localStorage.setItem("rewards", rewards);
-      localStorage.setItem("user", JSON.stringify(user));
-      dispatch(closeModal());
-      // window.location.reload();
+    // if (trialbalance < extraObject?.price) {
+    //   // Use user balance for review submission
+    //   if (extraObject?.balance < extraObject?.price) {
+    //     showmodel("Low User Balance", "Your User Balance is Low. Please recharge your account.");
+    //     return;
+    //   }
+    // } else {
+    //   // Trial balance is available, check trial balance first
+    //   if (trialbalance < extraObject?.price) {
+    //     showmodel("Low Trial Balance", "Your Trial Balance is Low. Please recharge your account.");
+    //     return;
+    //   }
+    // }
+
+
+
+    
+    // Condition 1: Trial balance is low
+    // if (trialbalance < extraObject?.price && extraObject?.balance < extraObject?.price) {
+    //   showmodel("Low Balance", "Your Balance is Low. Please recharge your account.");
+    //   return;
+    // }
+
+    // Condition 2: Reviews allowed is 0
+    if (jsonData?.reviewsAllowed === 0) {
+      showmodel("No Reviews Left", "Contact admin, your allowed reviews are finished.");
+      return;
     }
-  }, [isSuccess, refetch]);
-  if (extraObject?.balance < extraObject?.price && trialbalance<extraObject?.price) {
-    return <h1>Your Balance is Low. Please recharge your account</h1>;
+
+    // Condition 3: reviewsAllowed equals stuckreviews
+    if (jsonData?.reviewsAllowed === jsonData?.stuckreviews) {
+      showmodel();
+      return;
+    }
+
+     // If none of the above conditions are met, submit the review
+  console.log(data);
+  const userData = JSON.parse(localStorage.getItem("user")) || {};
+
+  // Update the reviewsUsed property
+  userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
+  console.log(jsonData);
+  localStorage.setItem("user", JSON.stringify(userData));
+
+  const dataReview = { ...extraObject, ...data };
+  const { photo, title, price, ...payload } = dataReview;
+
+  // Calculate 4% of the price
+  const rewardPercentage = 0.04;
+  const rewardAmount = price * rewardPercentage;
+
+  // Get the current rewards from localStorage
+  let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
+
+  // Add the reward amount to the current rewards
+  currentRewards += rewardAmount;
+  localStorage.setItem("rewards", currentRewards);
+
+  // Adjust the original balance
+  let originalBalance =
+    parseFloat(localStorage.getItem("originalBalance")) || 0;
+  let minus = rewardAmount / 2;
+  originalBalance -= minus;
+  localStorage.setItem("originalBalance", originalBalance);
+
+  await postReviewHanlder(payload);
+  const balancePayload = { balance: originalBalance };
+  await updateSingleUser(id, balancePayload);
+};
+
+useEffect(() => {
+  if (isSuccess) {
+    dispatch(
+      showNotification({
+        message: "Review Submitted!",
+        status: 1,
+      })
+    );
+    refetch();
+    localStorage.setItem("rewards", rewards);
+    localStorage.setItem("user", JSON.stringify(user));
+    dispatch(closeModal());
   }
-  if (jsonData?.reviewsAllowed === 0 ) {
-    return <h1>Contact admin, your allowed reviews are finished</h1>;
-  }
+}, [isSuccess, refetch]);
+
+// Handle when the balance is low or reviews are finished
+if (extraObject?.balance < extraObject?.price && trialbalance < extraObject?.price) {
+  return <h1>Your Balance is Low. Please recharge your account</h1>;
+}
+// if (jsonData?.reviewsAllowed === 0) {
+//   return <h1>Contact admin, your allowed reviews are finished</h1>;
+// }
+
+
+  // const onSubmit = async (data) => {
+  //   if (
+  //     (jsonData?.reviewsAllowed === jsonData?.stuckreviews) ||
+  //     trialbalance < extraObject?.price
+  // ){
+  //     showmodel();
+  //   }else{
+  //     console.log(data);
+  //     const userData = JSON.parse(localStorage.getItem("user")) || {};
+  
+  //     // Update the reviewsUsed property
+      
+  //     userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
+  //     console.log(jsonData);
+  //     localStorage.setItem("user", JSON.stringify(userData));
+  
+  //     const dataReview = { ...extraObject, ...data };
+  //     const { photo, title, price, ...payload } = dataReview;
+  
+  //     // Calculate 4% of the price
+  //     const rewardPercentage = 0.04;
+  //     const rewardAmount = price * rewardPercentage;
+  
+  //     // Get the current rewards from localStorage
+  //     let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
+  
+  //     // Add the reward amount to the current rewards
+  //     currentRewards += rewardAmount;
+  //     localStorage.setItem("rewards", currentRewards);
+  
+  //     // Adjust the original balance
+  //     let originalBalance =
+  //       parseFloat(localStorage.getItem("originalBalance")) || 0;
+  //     let minus = rewardAmount / 2;
+  //     originalBalance -= minus;
+  //     localStorage.setItem("originalBalance", originalBalance);
+  //     await postReviewHanlder(payload);
+  //     const balancePayload = { balance: originalBalance };
+  //     await updateSingleUser(id, balancePayload);
+  //     // window?.location.reload();
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (isSuccess) {
+  //     dispatch(
+  //       showNotification({
+  //         message: "Review Submitted!",
+  //         status: 1,
+  //       })
+  //     );
+  //     refetch();
+  //     localStorage.setItem("rewards", rewards);
+  //     localStorage.setItem("user", JSON.stringify(user));
+  //     dispatch(closeModal());
+  //     // window.location.reload();
+  //   }
+  // }, [isSuccess, refetch]);
+  // if (extraObject?.balance < extraObject?.price || trialbalance<extraObject?.price) {
+  //   return <h1>Your Balance is Low. Please recharge your account</h1>;
+  // }
+  // if (jsonData?.reviewsAllowed === 0 ) {
+  //   return <h1>Contact admin, your allowed reviews are finished</h1>;
+  // }
 
   const handleRatingClick = (value) => {
     setSelectedRating(value);
