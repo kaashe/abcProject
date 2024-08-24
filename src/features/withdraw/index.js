@@ -34,7 +34,7 @@ const WithDraw = ({ closeModal, extraObject }) => {
     photo,
     role,
     status,
-  } = JSON.parse(localStorage.getItem("user"));
+  } = JSON.parse(sessionStorage.getItem("user"));
   console.log("first", reviewsAllowed);
 
   const { postWithdraw, isLoading, isSuccess, isError, error } = useWithdraw();

@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 function Header() {
   const { pageTitle } = useSelector((state) => state.header);
   const [currentTheme, setCurrentTheme] = useState(
-    localStorage.getItem("theme")
+    sessionStorage.getItem("theme")
   );
   useEffect(() => {
     themeChange(false);
@@ -25,11 +25,11 @@ function Header() {
   }, [currentTheme]);
 
   function logoutUser() {
-    const rewards = localStorage.getItem("rewards");
-    const user = localStorage.getItem("user");
-    localStorage.clear();
-    localStorage.setItem("user",user);
-    localStorage.setItem("rewards",rewards);
+    const rewards = sessionStorage.getItem("rewards");
+    const user = sessionStorage.getItem("user");
+    sessionStorage.clear();
+    sessionStorage.setItem("user",user);
+    sessionStorage.setItem("rewards",rewards);
     window.location.href = "/";
   }
 

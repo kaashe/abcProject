@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     // baseUrl: "https://commerce-api.codematesolution.com/api/v1/",
     baseUrl: "https://arkindemo.kitchhome.com/api/v1/",
     prepareHeaders: (headers, { getState }) => {
-      const token = localStorage.getItem("access_token");
+      const token = sessionStorage.getItem("access_token");
 
       if (token) {
         headers.set("authorization", `Bearer ${token}`);

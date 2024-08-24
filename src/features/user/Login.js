@@ -65,7 +65,7 @@ function Login() {
         const payload = { role: "Customer", ...data };
         console.log(payload);
         const response = await signUphandler(payload);
-        localStorage.setItem("access_token", response?.token);
+        sessionStorage.setItem("access_token", response?.token);
         if (response?.token) {
           setSignUpIsloading(false);
         }
@@ -73,8 +73,8 @@ function Login() {
         const { email, photo, ...payload } = data;
         const response = await login(payload);
         console.log(response);
-        localStorage.setItem("access_token", response?.token);
-        const userData = localStorage.setItem(
+        sessionStorage.setItem("access_token", response?.token);
+        const userData = sessionStorage.setItem(
           "user",
           JSON.stringify(response?.data?.user)
         );
@@ -117,18 +117,18 @@ function Login() {
         showNotification({ message: "Logged in Successfully!", status: 1 })
       );
 
-      const user = localStorage.getItem("user");
+      const user = sessionStorage.getItem("user");
 
       // Check if user exists and is valid before parsing
       if (user) {
         try {
           const allData = JSON.parse(user);
-          localStorage.setItem("originalBalance", allData?.balance || 0); // Set a default balance if undefined
+          sessionStorage.setItem("originalBalance", allData?.balance || 0); // Set a default balance if undefined
         } catch (error) {
           console.error("Error parsing user data:", error);
         }
       } else {
-        console.error("No user data found in localStorage");
+        console.error("No user data found in sessionStorage");
       }
 
       window.location.href = "/app/dashboard";
@@ -158,9 +158,9 @@ function Login() {
   //     }, 5000)
   //   } else if (isSuccess) {
   //     dispatch(showNotification({ message: "Logged in Successfully!", status: 1 }));
-  //     const user = localStorage.getItem("user")
+  //     const user = sessionStorage.getItem("user")
   //    const allData = JSON?.parse(user);
-  //    localStorage.setItem('originalBalance',allData?.balance)
+  //    sessionStorage.setItem('originalBalance',allData?.balance)
   //     window.location.href = "/app/dashboard";
   //   }
   //   else if (isError) {
@@ -412,7 +412,7 @@ export default Login;
 //         const payload = { role: "Customer", ...data };
 //         console.log(payload);
 //         const response = await signUphandler(payload);
-//         localStorage.setItem('access_token', response?.token);
+//         sessionStorage.setItem('access_token', response?.token);
 //         if (response?.token) {
 //           setSignUpIsloading(false);
 //         }
@@ -420,8 +420,8 @@ export default Login;
 //         const { email, photo, ...payload } = data;
 //         const response = await login(payload);
 //         console.log(response);
-//         localStorage.setItem('access_token', response?.token);
-//      const userData=    localStorage.setItem('user', JSON.stringify(response?.data?.user));
+//         sessionStorage.setItem('access_token', response?.token);
+//      const userData=    sessionStorage.setItem('user', JSON.stringify(response?.data?.user));
      
 //       }
 //     } catch (err) {
@@ -456,9 +456,9 @@ export default Login;
 //       }, 5000)
 //     } else if (isSuccess) {
 //       dispatch(showNotification({ message: "Logged in Successfully!", status: 1 }));
-//       const user = localStorage.getItem("user")
+//       const user = sessionStorage.getItem("user")
 //      const allData = JSON?.parse(user);
-//      localStorage.setItem('originalBalance',allData?.balance)
+//      sessionStorage.setItem('originalBalance',allData?.balance)
 //       window.location.href = "/app/dashboard";
 //     }
 //     else if (isError) {

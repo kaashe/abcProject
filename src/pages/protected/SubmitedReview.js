@@ -8,7 +8,7 @@ import SearchBar from "../../components/Input/SearchBar";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 
 const SubmitedReview = () => {
-  const userdata = localStorage.getItem("user");
+  const userdata = sessionStorage.getItem("user");
   const userssss = JSON.parse(userdata);
   const { data: submittedRev, isLoading, isError, error } = useGetSubmittedReviewsQuery(userssss?._id);
   // console.log(submittedRev?.data?.reviews, "submittedRev");

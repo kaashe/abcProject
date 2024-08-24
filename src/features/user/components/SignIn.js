@@ -38,7 +38,7 @@ function SignIn() {
             const { email, photo, ...payload } = data;
             console.log(payload);
             const response = await login(payload);
-            localStorage.setItem('access_token', response?.token);
+            sessionStorage.setItem('access_token', response?.token);
 
         } catch (err) {
             console.error('Error in form submission:', err);

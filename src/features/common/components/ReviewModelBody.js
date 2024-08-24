@@ -41,7 +41,7 @@ const ReviewModelBody = () => {
   const { postReviewHanlder, data, isLoading, isSuccess, isError, error } =
     useReview();
 
-  const storageData = localStorage?.getItem("user");
+  const storageData = sessionStorage?.getItem("user");
   const jsonData = JSON?.parse(storageData);
   const trialbalance = jsonData?.trialbalance;
   
@@ -104,12 +104,12 @@ const ReviewModelBody = () => {
 
      // If none of the above conditions are met, submit the review
   console.log(data);
-  const userData = JSON.parse(localStorage.getItem("user")) || {};
+  const userData = JSON.parse(sessionStorage.getItem("user")) || {};
 
   // Update the reviewsUsed property
   userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
   console.log(jsonData);
-  localStorage.setItem("user", JSON.stringify(userData));
+  sessionStorage.setItem("user", JSON.stringify(userData));
 
   const dataReview = { ...extraObject, ...data };
   const { photo, title, price, ...payload } = dataReview;
@@ -118,19 +118,19 @@ const ReviewModelBody = () => {
   const rewardPercentage = 0.04;
   const rewardAmount = price * rewardPercentage;
 
-  // Get the current rewards from localStorage
-  let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
+  // Get the current rewards from sessionStorage
+  let currentRewards = parseFloat(sessionStorage.getItem("rewards")) || 0;
 
   // Add the reward amount to the current rewards
   currentRewards += rewardAmount;
-  localStorage.setItem("rewards", currentRewards);
+  sessionStorage.setItem("rewards", currentRewards);
 
   // Adjust the original balance
   let originalBalance =
-    parseFloat(localStorage.getItem("originalBalance")) || 0;
+    parseFloat(sessionStorage.getItem("originalBalance")) || 0;
   let minus = rewardAmount / 2;
   originalBalance -= minus;
-  localStorage.setItem("originalBalance", originalBalance);
+  sessionStorage.setItem("originalBalance", originalBalance);
 
   await postReviewHanlder(payload);
   const balancePayload = { balance: originalBalance };
@@ -146,8 +146,8 @@ useEffect(() => {
       })
     );
     refetch();
-    localStorage.setItem("rewards", rewards);
-    localStorage.setItem("user", JSON.stringify(user));
+    sessionStorage.setItem("rewards", rewards);
+    sessionStorage.setItem("user", JSON.stringify(user));
     dispatch(closeModal());
   }
 }, [isSuccess, refetch]);
@@ -169,13 +169,13 @@ if (extraObject?.balance < extraObject?.price && trialbalance < extraObject?.pri
   //     showmodel();
   //   }else{
   //     console.log(data);
-  //     const userData = JSON.parse(localStorage.getItem("user")) || {};
+  //     const userData = JSON.parse(sessionStorage.getItem("user")) || {};
   
   //     // Update the reviewsUsed property
       
   //     userData.reviewsUsed = (userData.reviewsUsed || 0) + 1;
   //     console.log(jsonData);
-  //     localStorage.setItem("user", JSON.stringify(userData));
+  //     sessionStorage.setItem("user", JSON.stringify(userData));
   
   //     const dataReview = { ...extraObject, ...data };
   //     const { photo, title, price, ...payload } = dataReview;
@@ -184,19 +184,19 @@ if (extraObject?.balance < extraObject?.price && trialbalance < extraObject?.pri
   //     const rewardPercentage = 0.04;
   //     const rewardAmount = price * rewardPercentage;
   
-  //     // Get the current rewards from localStorage
-  //     let currentRewards = parseFloat(localStorage.getItem("rewards")) || 0;
+  //     // Get the current rewards from sessionStorage
+  //     let currentRewards = parseFloat(sessionStorage.getItem("rewards")) || 0;
   
   //     // Add the reward amount to the current rewards
   //     currentRewards += rewardAmount;
-  //     localStorage.setItem("rewards", currentRewards);
+  //     sessionStorage.setItem("rewards", currentRewards);
   
   //     // Adjust the original balance
   //     let originalBalance =
-  //       parseFloat(localStorage.getItem("originalBalance")) || 0;
+  //       parseFloat(sessionStorage.getItem("originalBalance")) || 0;
   //     let minus = rewardAmount / 2;
   //     originalBalance -= minus;
-  //     localStorage.setItem("originalBalance", originalBalance);
+  //     sessionStorage.setItem("originalBalance", originalBalance);
   //     await postReviewHanlder(payload);
   //     const balancePayload = { balance: originalBalance };
   //     await updateSingleUser(id, balancePayload);
@@ -213,8 +213,8 @@ if (extraObject?.balance < extraObject?.price && trialbalance < extraObject?.pri
   //       })
   //     );
   //     refetch();
-  //     localStorage.setItem("rewards", rewards);
-  //     localStorage.setItem("user", JSON.stringify(user));
+  //     sessionStorage.setItem("rewards", rewards);
+  //     sessionStorage.setItem("user", JSON.stringify(user));
   //     dispatch(closeModal());
   //     // window.location.reload();
   //   }

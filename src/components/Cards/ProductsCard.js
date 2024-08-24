@@ -12,7 +12,7 @@ function ProductsCard({
   colorIndex,
 }) {
   const COLORS = ["", ""];
-  const userdata = localStorage.getItem("user");
+  const userdata = sessionStorage.getItem("user");
   const { _id: user } = JSON?.parse(userdata);
   const { balance } = JSON?.parse(userdata);
   const dispatch = useDispatch();

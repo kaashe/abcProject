@@ -2,7 +2,7 @@ import React from 'react';
 
 export const ReviewRestrication = () => {
   // Retrieve the data from local storage and parse it as JSON
-  const storageData = localStorage.getItem("user"); // Assuming 'user' is the key
+  const storageData = sessionStorage.getItem("user"); // Assuming 'user' is the key
   const userData = storageData ? JSON.parse(storageData) : null; // Parse the string to an object
   
   // Access requiredDeposite and stuckcommission

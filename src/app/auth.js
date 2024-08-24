@@ -1,9 +1,9 @@
 import axios from "axios";
 let refreshTokenInterval;
 const checkAuth = async () => {
-  const TOKEN = localStorage.getItem("access_token");
-  const REFRESH_TOKEN = localStorage.getItem("refresh_token");
-  const TokenExpiration = localStorage.getItem("access_token_expires_at");
+  const TOKEN = sessionStorage.getItem("access_token");
+  const REFRESH_TOKEN = sessionStorage.getItem("refresh_token");
+  const TokenExpiration = sessionStorage.getItem("access_token_expires_at");
   const BASE_URL = window.location.origin;
   const PUBLIC_ROUTE_PATTERNS = [
     `${BASE_URL}/login`,
@@ -65,20 +65,20 @@ const checkAuth = async () => {
           );
           const newToken = response?.data?.access?.token;
           // Update access token
-          localStorage.setItem("access_token", newToken);
+          sessionStorage.setItem("access_token", newToken);
           // Update the expiry time
           const newTokenExpiration = response.data?.access?.expires;
-          localStorage.setItem(
+          sessionStorage.setItem(
             "access_token_expires_at",
             JSON.stringify(newTokenExpiration)
           );
           const newRefreshToken = response.data?.refresh?.token;
           // Update refresh token
-          localStorage.setItem("refresh_token", newRefreshToken);
+          sessionStorage.setItem("refresh_token", newRefreshToken);
         }
       } catch (error) {
         console.error("Error refreshing token:", error);
-        localStorage.clear();
+        sessionStorage.clear();
 
         window.location.href = "/login";
         clearInterval(refreshTokenInterval);

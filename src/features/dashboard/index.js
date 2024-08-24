@@ -86,17 +86,17 @@ function Dashboard() {
   const { data: currentUserData, refetch: refetchCurrentUser } = useGetCurrentUserQuery();
   // console.log(currentUserData?.data?.data,'user data');
 const title=currentUserData?.data?.data;
-  async function updateLocalStorage(updatedUserData) {
+  async function updatesessionStorage(updatedUserData) {
     try {
       await new Promise((resolve) => setTimeout(resolve, 1000)); // Simulate a delay for demonstration
-      const localstorageData = localStorage.setItem(
+      const sessionStorageData = sessionStorage.setItem(
         "user",
         JSON.stringify(updatedUserData)
       );
-      setUserData(JSON.parse(localstorageData));
-      console.log("User data updated in localStorage");
+      setUserData(JSON.parse(sessionStorageData));
+      console.log("User data updated in sessionStorage");
     } catch (error) {
-      console.error("Error updating user data in localStorage:", error);
+      console.error("Error updating user data in sessionStorage:", error);
     }
   }
   // Function to filter and shuffle products
@@ -110,13 +110,13 @@ const title=currentUserData?.data?.data;
     return shuffleArray(filtered);
   };
 
-  // Fetch current user data every 5 seconds and update localStorage asynchronously
+  // Fetch current user data every 5 seconds and update sessionStorage asynchronously
   // useEffect(() => {
   //   const intervalId = setInterval(() => {
   //     refetchCurrentUser()
   //       .then((response) => {
   //         const updatedUserData = response.data.data.data;
-  //         updateLocalStorage(updatedUserData);
+  //         updatesessionStorage(updatedUserData);
   //       })
   //       .catch((error) => {
   //         console.error("Error fetching current user data:", error);
@@ -137,7 +137,7 @@ const title=currentUserData?.data?.data;
       refetchCurrentUser()
         .then((response) => {
           const updatedUserData = response.data.data.data;
-          localStorage.setItem("user", JSON.stringify(updatedUserData));
+          sessionStorage.setItem("user", JSON.stringify(updatedUserData));
           shuffleProducts(); // Shuffle products after each API call
         })
         .catch((error) => {
@@ -154,9 +154,9 @@ const title=currentUserData?.data?.data;
   }, [filterItem, products]);
 
 
-  // Retrieve stuckreviews and reviewsUsed from localStorage
-  const stuckreviews = localStorage.getItem("stuckreviews");
-  const reviewsUsed = localStorage.getItem("reviewsUsed");
+  // Retrieve stuckreviews and reviewsUsed from sessionStorage
+  const stuckreviews = sessionStorage.getItem("stuckreviews");
+  const reviewsUsed = sessionStorage.getItem("reviewsUsed");
   const isReviewDisabled = stuckreviews === reviewsUsed;
 
   const filterProducts = (products) => {
@@ -308,7 +308,7 @@ export default Dashboard;
 //     return shuffleArray(filtered);
 //   };
 
-//   // Fetch current user data every 5 seconds and update localStorage
+//   // Fetch current user data every 5 seconds and update sessionStorage
 //   useEffect(() => {
 //     const shuffleProducts = () => {
 //       const shuffled = filterAndShuffleProducts(products, filterItem);
@@ -321,8 +321,8 @@ export default Dashboard;
 //       refetchCurrentUser()
 //         .then((response) => {
 //           const updatedUserData = response.data.data.data;
-//           localStorage.setItem("user", JSON.stringify(updatedUserData));
-//           console.log("User data updated in localStorage");
+//           sessionStorage.setItem("user", JSON.stringify(updatedUserData));
+//           console.log("User data updated in sessionStorage");
 //           shuffleProducts(); // Shuffle products after each API call
 //         })
 //         .catch((error) => {

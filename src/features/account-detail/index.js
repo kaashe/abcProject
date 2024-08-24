@@ -17,7 +17,7 @@ const AccountDetail = () => {
     photo,
     role,
     status,
-  } = JSON.parse(localStorage.getItem("user"));
+  } = JSON.parse(sessionStorage.getItem("user"));
 
   const {
     data: currentuser,
