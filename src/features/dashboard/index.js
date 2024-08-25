@@ -208,14 +208,14 @@ const title=currentUserData?.data?.data;
 
   return (
     <>
-      <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-1 gap-6">
+      <div className="grid lg:grid-cols-4 mt-2 md:grid-cols-2 grid-cols-2 gap-6">
         {statsData.map((d, k) => (
           <DashboardStats key={k} {...d} colorIndex={k} />
         ))}
       </div>
       <div className="mt-2 gap-1">
-        <ul className="menu menu-sm menu-vertical lg:menu-horizontal bg-base-400 rounded-box space-y-1 lg:space-y-0 lg:space-x-1 gap-1">
-          {uniqueCategories.map((category, index) => (
+      <ul className="menu flex flex-row bg-base-400 rounded-box gap-1">
+      {uniqueCategories.map((category, index) => (
             <li key={index} onClick={() => filterItemHandler(category)}>
               <a
                 className={`${

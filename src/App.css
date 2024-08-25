@@ -28,6 +28,18 @@
   color: #61dafb;
 }
 
+/* MY CSS */
+/* Add this to your global stylesheet or in a <style> block */
+.ellipsis-multiline {
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Number of lines to show */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

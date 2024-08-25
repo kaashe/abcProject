@@ -39,7 +39,8 @@ function ProductsCard({
       </figure>
       <div className="card-body">
         <h2 className="card-title">{title}</h2>
-        <p className="stat-desc ">{description}</p>
+        <p className="stat-desc text-sm md:text-base lg:text-lg break-words whitespace-normal ellipsis-multiline">
+        {description}</p>
         <div className="card-actions justify-end">
           <button
             className="btn btn-sm bg-[#6D4E8A] text-white  rounded focus:outline-none focus:ring-2 focus:ring-gray-300"

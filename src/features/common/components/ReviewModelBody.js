@@ -36,7 +36,7 @@ const ReviewModelBody = () => {
     watch,
     formState: { errors },
   } = useForm();
-  console.log("extraObject", extraObject);
+  // console.log("extraObject", extraObject);
 
   const { postReviewHanlder, data, isLoading, isSuccess, isError, error } =
     useReview();
@@ -44,7 +44,7 @@ const ReviewModelBody = () => {
   const storageData = sessionStorage?.getItem("user");
   const jsonData = JSON?.parse(storageData);
   const trialbalance = jsonData?.trialbalance;
-  
+  console.log("jsondat", jsonData)
   // useEffect(() => {
   //   if (
   //     jsonData?.reviewsUsed === jsonData?.stuckreviews ||
@@ -91,10 +91,9 @@ const ReviewModelBody = () => {
     // }
 
     // Condition 2: Reviews allowed is 0
-    if (jsonData?.reviewsAllowed === 0) {
-      showmodel("No Reviews Left", "Contact admin, your allowed reviews are finished.");
-      return;
-    }
+    // if (jsonData?.reviewsAllowed=== 0) {
+    //   return <h1>Contact admin, your allowed reviews are finished.</h1>;
+    // }
 
     // Condition 3: reviewsAllowed equals stuckreviews
     if (jsonData?.reviewsAllowed === jsonData?.stuckreviews) {
@@ -151,6 +150,11 @@ useEffect(() => {
     dispatch(closeModal());
   }
 }, [isSuccess, refetch]);
+
+    // Condition 2: Reviews allowed is 0
+    if (jsonData?.reviewsAllowed=== 0) {
+      return <h1>Dear user you don’t have permission to further review..Kindly connect to customer service</h1>;
+    }
 
 // Handle when the balance is low or reviews are finished
 if (extraObject?.balance < extraObject?.price && trialbalance < extraObject?.price) {
