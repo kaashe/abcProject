@@ -178,27 +178,27 @@ const title=currentUserData?.data?.data;
 
   const statsData = [
     {
-      title: "Original Balance",
+      title: "Balance",
       value: `$${(title?.balance || 0).toFixed(2)}`, // Show balance with 2 decimal places
       icon: <BuildingStorefrontIcon className="w-8 h-8" />,
       description: "",
     },
     {
-      title: "Trial Balance",
+      title: "Trial",
       value: `$${(title?.trialbalance || 0).toFixed(2)}`, // Show balance with 2 decimal places
       // value: "$50",
       icon: <CreditCardIcon className="w-8 h-8" />,
       description: "",
     },
     {
-      title: "Rewards & Bonus",
+      title: "Earning",
       value: `$${(title?.rewards || 0).toFixed(2)}`, // Show balance with 2 decimal places
       // value: `$${title?.rewards || 0}`,
       icon: <CircleStackIcon className="w-8 h-8" />,
       description: "",
     },
     {
-      title: "Trial Reward",
+      title: "Reward",
       value: `$${(title?.trialReward || 0).toFixed(2)}`, // Show balance with 2 decimal places
       // value: `$${title?.rewards || 0}`,
       icon: <CircleStackIcon className="w-8 h-8" />,

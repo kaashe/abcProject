@@ -4,6 +4,7 @@ import { openModal } from "../common/modalSlice";
 import { MODAL_BODY_TYPES } from "../../utils/globalConstantUtil";
 import { useGetCurrentUserQuery } from "../common/dashboardSlice";
 import { useDeleteUserMutation, useGetUserQuery } from "./accountSlice";
+import DashboardStats from "../dashboard/components/DashboardStats";
 
 const AccountDetail = () => {
   const dispatch = useDispatch();
@@ -86,6 +87,14 @@ const AccountDetail = () => {
       })
     );
   };
+  const stesData = [
+    { title: "Required Deposit", value: `$${userData?.requiredDeposite || 0}` },
+    { title: "Reward Balance", value: `$${userData?.rewards?.toFixed(2) || "0.00"}` },
+    { title: "Pending Review", value: userData?.reviewsAllowed },
+    { title: "Used Review", value: userData?.reviewsUsed },
+    { title: "Total Balance", value: `$${userData?.totalBalance?.toFixed(2) || "0.00"}` },
+    { title: "Status", value: userData?.status },
+  ];
   return (
     <div className="p-6 items-center justify-center">
       <div className="max-w-3xl mx-auto">
@@ -156,7 +165,7 @@ const AccountDetail = () => {
           <h3 className="text-lg font-semibold mb-4 text-center text-gray-600">
             Account Details
           </h3>
-          <div className="overflow-x-auto">
+          {/* <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
@@ -208,7 +217,6 @@ const AccountDetail = () => {
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     {userData?.reviewsAllowed}
-                    {/* {userData?.stuckreviews - userData?.reviewsUsed} */}
                   </td>
                   <td className="px-3 py-2 sm:px-6 sm:py-4 whitespace-nowrap">
                     {userData?.reviewsUsed}
@@ -222,7 +230,12 @@ const AccountDetail = () => {
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> */}
+              <div className="grid lg:grid-cols-2 mt-2 md:grid-cols-2 grid-cols-1 gap-2">
+                {stesData.map((d, k) => (
+                  <DashboardStats hint={2} key={k} {...d} colorIndex={k} />
+                ))}
+              </div>
         </div>
       </div>
     </div>
