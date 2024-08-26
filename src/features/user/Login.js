@@ -177,8 +177,8 @@ function Login() {
       {isOpen && <ModalLayout onClose={closeErrorModal} error={theError} />}
       <div className="card mx-auto w-full max-w-5xl shadow-xl">
         <div className="grid md:grid-cols-2 grid-cols-1 bg-base-100 rounded-xl">
-          <div>
-            <LandingIntro />
+        <div className="relative w-full h-screen">
+        <LandingIntro />
           </div>
           <div className="py-20 px-10">
             <div className=" font-semibold  text-center">
